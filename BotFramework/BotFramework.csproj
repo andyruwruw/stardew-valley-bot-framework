@@ -48,13 +48,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Framework\Map.cs" />
+    <Compile Include="Framework\Bot.cs" />
+    <Compile Include="Framework\Consolidate\TileGroup.cs" />
+    <Compile Include="Framework\Consolidate\TileGroupGenerator.cs" />
+    <Compile Include="Framework\Debug\LogProxy.cs" />
+    <Compile Include="Framework\Location\LocationParser.cs" />
+    <Compile Include="Framework\Location\Map.cs" />
+    <Compile Include="Framework\Location\Tile.cs" />
+    <Compile Include="Framework\Pathfind\IntergroupPathGenerator.cs" />
+    <Compile Include="Framework\Pathfind\IntragroupPathGenerator.cs" />
+    <Compile Include="Framework\PlayerControler\ActionableTile.cs" />
+    <Compile Include="Framework\PlayerControler\PlayerController.cs" />
+    <Compile Include="Framework\PlayerControler\PseudoFarmer.cs" />
+    <Compile Include="ModConfig.cs" />
     <Compile Include="ModEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Pathoschild.Stardew.ModBuildConfig.3.2.2\build\Pathoschild.Stardew.ModBuildConfig.targets" Condition="Exists('..\packages\Pathoschild.Stardew.ModBuildConfig.3.2.2\build\Pathoschild.Stardew.ModBuildConfig.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
