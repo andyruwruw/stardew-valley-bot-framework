@@ -1,7 +1,7 @@
 ﻿using BotFramework.Framework.Location;
 using System.Collections.Generic;
 
-namespace BotFramework.Framework.PlayerControler
+namespace BotFramework.Framework.Actionable
 {
     /// <summary>
     /// A location to stand, and queue of tiles to run actions on.
@@ -9,11 +9,12 @@ namespace BotFramework.Framework.PlayerControler
     class ActionableTile
     {
         private Tile _position;
-        private List<Tile> _queue;
+        private Queue<Tile> _queue;
+        private bool _isWarp;
 
         public ActionableTile()
         {
-            this._queue = new List<Tile>();
+            this._queue = new Queue<Tile>();
         }
 
         /// <summary>
@@ -41,11 +42,9 @@ namespace BotFramework.Framework.PlayerControler
         /// </summary>
         /// 
         /// <returns>Removed Tile</returns>
-        public Tile Pop()
+        public Tile Dequeue()
         {
-            Tile temp = this._queue[0];
-            this._queue.RemoveAt(0);
-            return temp;
+            return this._queue.Dequeue();
         }
 
         /// <summary>
@@ -53,9 +52,9 @@ namespace BotFramework.Framework.PlayerControler
         /// </summary>
         /// 
         /// <param name="tile">Tile to be added</param>
-        public void Add(Tile tile)
+        public void Enqueue(Tile tile)
         {
-            this._queue.Add(tile);
+            this._queue.Enqueue(tile);
         }
 
         /// <summary>

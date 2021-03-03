@@ -1,5 +1,7 @@
-﻿using StardewValley;
+﻿using Netcode;
+using StardewValley;
 using System;
+using System.Collections.Generic;
 
 namespace BotFramework.Framework.Location
 {
@@ -8,23 +10,33 @@ namespace BotFramework.Framework.Location
     /// </summary>
     class LocationParser
     {
+        private GameLocation _location;
         private string _name;
-        private bool _loaded;
+        private bool _mapLoaded;
         private Map _map;
+        private bool _warpsLoaded;
+        private List<Warp> _warps;
 
-        public LocationParser(string name)
+        public LocationParser(GameLocation location)
+        {
+            this._location = location;
+            this._mapLoaded = false;
+            this._map = new Map(this._name);
+            this._warpsLoaded = false;
+            this._warps = new List<Warp>();
+
+            if (this._location != null)
+            {
+                this._name = location.NameOrUniqueName;
+            }
+        }
+
+        public LocationParser(string name):this(location: null)
         {
             this._name = name;
-            this._loaded = false;
-            this._map = new Map(name);
         }
 
-        public LocationParser()
-        {
-            this._name = Game1.currentLocation.NameOrUniqueName;
-            this._loaded = false;
-            this._map = new Map(this._name);
-        }
+        public LocationParser():this(Game1.currentLocation) { }
 
         /// <summary>
         /// Retrieve Map instance of location.
@@ -33,11 +45,30 @@ namespace BotFramework.Framework.Location
         /// <returns>Map instance of location</returns>
         public Map GetMap()
         {
-            if (!this._loaded)
+            if (!this._mapLoaded)
             {
                 this.LoadMap();
             }
             return this._map;
+        }
+
+        public List<Warp> GetWarps()
+        {
+            if (!this._warpsLoaded)
+            {
+                this.LoadWarps();
+            }
+            return this._warps;
+        }
+
+        public string GetName()
+        {
+            if (this._name == null && this._location != null)
+            {
+                this._name = this._location.NameOrUniqueName;
+                
+            }
+            return this._name;
         }
 
         /// <summary>
@@ -45,16 +76,17 @@ namespace BotFramework.Framework.Location
         /// </summary>
         /// 
         /// <returns>GameLocation instance of location</returns>
-        private GameLocation GetLocation()
+        private void GetLocation()
         {
-            GameLocation location = Utility.fuzzyLocationSearch(this._name);
-
-            if (location == null)
+            if (this._location == null)
             {
-                throw new Exception($"GameLocation {this._name} not found, please ensure that is a valid value.");
-            }
+                this._location = Utility.fuzzyLocationSearch(this._name);
 
-            return location;
+                if (this._location == null)
+                {
+                    throw new Exception($"GameLocation {this._name} not found, please ensure that is a valid value.");
+                }
+            }
         }
 
         /// <summary>
@@ -62,17 +94,31 @@ namespace BotFramework.Framework.Location
         /// </summary>
         private void LoadMap()
         {
-            GameLocation location = this.GetLocation();
+            this.GetLocation();
 
-            for (int y = 0; y < location.map.Layers[0].LayerHeight; y++)
+            for (int y = 0; y < this._location.map.Layers[0].LayerHeight; y++)
             {
-                for (int x = 0; x < location.map.Layers[0].LayerWidth; x++)
+                for (int x = 0; x < this._location.map.Layers[0].LayerWidth; x++)
                 {
-                    this._map.Set(x, y, new Tile(x, y));
+                    this._map.Set(x, y, new Tile(this._name, x, y));
                 }
             }
 
-            this._loaded = true;
+            this._mapLoaded = true;
+        }
+
+        private void LoadWarps()
+        {
+            this.GetLocation();
+
+            NetObjectList<Warp> warps = this._location.warps;
+
+            foreach (Warp warp in warps)
+            {
+                this._warps.Add(warp);
+            }
+
+            this._warpsLoaded = true;
         }
     }
 }

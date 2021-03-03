@@ -1,4 +1,4 @@
-﻿using BotFramework.Framework.Debug;
+﻿using BotFramework.Framework.Helpers;
 using StardewModdingAPI;
 
 namespace BotFramework

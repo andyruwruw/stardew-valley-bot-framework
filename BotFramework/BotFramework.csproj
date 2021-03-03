@@ -48,23 +48,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Framework\Bot.cs" />
-    <Compile Include="Framework\Consolidate\TileGroup.cs" />
-    <Compile Include="Framework\Consolidate\TileGroupGenerator.cs" />
-    <Compile Include="Framework\Debug\LogProxy.cs" />
+    <Compile Include="Bot.cs" />
+    <Compile Include="Framework\Brain.cs" />
+    <Compile Include="Framework\Actionable\ActionableGroup.cs" />
+    <Compile Include="Framework\Helpers\LogProxy.cs" />
+    <Compile Include="Framework\Helpers\Distance.cs" />
+    <Compile Include="Framework\Actionable\ActionableLocation.cs" />
     <Compile Include="Framework\Location\LocationParser.cs" />
+    <Compile Include="Framework\Location\LocationTour.cs" />
     <Compile Include="Framework\Location\Map.cs" />
     <Compile Include="Framework\Location\Tile.cs" />
-    <Compile Include="Framework\Pathfind\IntergroupPathGenerator.cs" />
-    <Compile Include="Framework\Pathfind\IntragroupPathGenerator.cs" />
-    <Compile Include="Framework\PlayerControler\ActionableTile.cs" />
-    <Compile Include="Framework\PlayerControler\PlayerController.cs" />
-    <Compile Include="Framework\PlayerControler\PseudoFarmer.cs" />
+    <Compile Include="Framework\Pathfinding\SearchGenerator.cs" />
+    <Compile Include="Framework\Targets\CharacterTarget.cs" />
+    <Compile Include="Framework\Targets\ObjectValidator.cs" />
+    <Compile Include="Framework\Targets\TileTarget.cs" />
+    <Compile Include="Framework\Targets\Target.cs" />
+    <Compile Include="Framework\World\WorldParser.cs" />
+    <Compile Include="Framework\Pathfinding\FillGenerator.cs" />
+    <Compile Include="Framework\Pathfinding\TourGenerator.cs" />
+    <Compile Include="Framework\Actionable\ActionableTile.cs" />
+    <Compile Include="Framework\Controller\CharacterController.cs" />
+    <Compile Include="Framework\Controller\FarmerGenerator.cs" />
+    <Compile Include="Framework\World\WorldTour.cs" />
     <Compile Include="ModConfig.cs" />
     <Compile Include="ModEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WaterBot.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="manifest.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

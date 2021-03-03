@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using StardewValley;
 using System;
 using System.Collections.Generic;
 
@@ -9,17 +10,29 @@ namespace BotFramework.Framework.Location
     /// </summary>
     class Tile
     {
+        private string _locationName;
         private int _x;
         private int _y;
         private List<bool> _visited;
 
-        public Tile(int x, int y)
+        public Tile(string locationName, int x, int y)
         {
+            this._locationName = locationName;
             this._x = x;
             this._y = y;
 
             this._visited = new List<bool>();
             this._visited.Add(false);
+        }
+
+        /// <summary>
+        /// Retrieve name of GameLocation this tile belongs to.
+        /// </summary>
+        /// 
+        /// <returns>Name of GameLocation</returns>
+        public string GetLocationName()
+        {
+            return this._locationName;
         }
 
         /// <summary>
@@ -40,6 +53,16 @@ namespace BotFramework.Framework.Location
         public int GetTileY()
         {
             return this._y;
+        }
+
+        /// <summary>
+        /// Retrieve Point instance of Tile
+        /// </summary>
+        /// 
+        /// <returns>Point instance</returns>
+        public Point GetPoint()
+        {
+            return new Point(this._x, this._y);
         }
 
         /// <summary>
@@ -98,6 +121,16 @@ namespace BotFramework.Framework.Location
         }
 
         /// <summary>
+        /// Returns whether farmer can pass through tile.
+        /// </summary>
+        /// 
+        /// <returns>Whether Tile is passable</returns>
+        public bool isPassable()
+        {
+            return this.GetLocation().isCollidingPosition(new Rectangle(this._x * 64 + 1, this._y * 64 + 1, 62, 62), Game1.viewport, isFarmer: true, -1, glider: false, Game1.player);
+        }
+
+        /// <summary>
         /// Manhattan distance to another point.
         /// </summary>
         /// 
@@ -129,6 +162,23 @@ namespace BotFramework.Framework.Location
         public int DistanceTo(Point other)
         {
             return DistanceTo(other.X, other.Y);
+        }
+
+        /// <summary>
+        /// Retrieve GameLocation instance of Tile.
+        /// </summary>
+        /// 
+        /// <returns>GameLocation instance of Tile</returns>
+        private GameLocation GetLocation()
+        {
+            GameLocation location = Utility.fuzzyLocationSearch(this._locationName);
+
+            if (location == null)
+            {
+                throw new Exception($"GameLocation {this._locationName} not found by Tile, this bug should be reported.");
+            }
+
+            return location;
         }
 
         /// <summary>
