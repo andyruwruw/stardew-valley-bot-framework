@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using StardewValley;
+using System.Collections.Generic;
 
 namespace BotFramework.Targets
 {
@@ -6,7 +7,7 @@ namespace BotFramework.Targets
     /// Character specific Target.
     /// Specifies what Character the bot should target, method by which characters are found, call order, post selectors and the action to be performed.
     /// </summary>
-    class TargetCharacter : Target
+    class TargetCharacter : Target<Character>
     {
         /// <summary>
         /// Instantiates a CharacterTarget, used to specify the query method and selection of characters and the corresponding action to be performed.
@@ -20,8 +21,8 @@ namespace BotFramework.Targets
         /// <param name="selectors"></param>
         public TargetCharacter(
             string name,
-            Validator validator,
-            Action action,
+            Validator<Character> validator,
+            Action<Character> action,
             CallOrder callOrder = CallOrder.AtLocationStart,
             QueryBehavior query = QueryBehavior.DoForAll,
             IList<PostQuerySelector> selectors = null,

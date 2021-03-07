@@ -1,30 +1,24 @@
-﻿using BotFramework.Framework.Actionable;
-using BotFramework.Locations;
+﻿using BotFramework.Actions;
+using BotFramework.Targets;
 using StardewValley;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BotFramework.World
 {
     interface IWorldParser
     {
-        IList<ILocationParser> GetActionableLocations();
-
-        void GenerateActionableLocations();
-
         /// <summary>
-        /// Retrieves GameLocation instance based on location name or unique name.
+        /// Sets locations by single GameLocation instance.
         /// </summary>
         /// 
-        /// <param name="locationName">String name or unique name of GameLocation</param>
-        /// <returns></returns>
-        GameLocation GetGameLocation(string locationName);
-
+        /// <param name="location">GameLocation instance</param>
         void SetLocation(GameLocation location);
 
+        /// <summary>
+        /// Sets locations by single location names or unique names.
+        /// </summary>
+        /// 
+        /// <param name="location">Location names or unique name</param>
         void SetLocation(string locationName);
 
         /// <summary>
@@ -40,5 +34,18 @@ namespace BotFramework.World
         /// 
         /// <param name="location">List of location names or unique names</param>
         void SetLocations(IList<string> locations);
+
+        /// <summary>
+        /// Finds shortest path through all provided GameLocations
+        /// </summary>
+        void GenerateActionableLocations();
+
+        /// <summary>
+        /// Returns actions based on targets for current location.
+        /// </summary>
+        /// 
+        /// <param name="targets">List of applicable targets for query.</param>
+        /// <returns>List of actions</returns>
+        List<IAction> GetActions(IList<ITarget> targets);
     }
 }

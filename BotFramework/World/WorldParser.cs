@@ -1,6 +1,7 @@
 ﻿using BotFramework.Actions;
 using BotFramework.Helpers;
 using BotFramework.Locations;
+using BotFramework.Targets;
 using StardewValley;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace BotFramework.World
         private IList<GameLocation> _locations;
 
         private int _current;
-        private List<ILocationParser> path;
+        private IList<ILocationParser> path;
 
         private IList<ILocationParser> _ordered;
 
@@ -38,7 +39,7 @@ namespace BotFramework.World
         /// 
         /// <param name="locationName">String name or unique name of GameLocation</param>
         /// <returns></returns>
-        public GameLocation GetGameLocation(string locationName)
+        private GameLocation GetGameLocation(string locationName)
         {
             GameLocation location = Utility.fuzzyLocationSearch(locationName);
 
@@ -91,6 +92,17 @@ namespace BotFramework.World
         }
 
         /// <summary>
+        /// Returns actions based on targets for current location.
+        /// </summary>
+        /// 
+        /// <param name="targets">List of applicable targets for query.</param>
+        /// <returns>List of actions</returns>
+        public List<IAction> GetActions(IList<ITarget> targets)
+        {
+            return this._ordered[this._current].GetActions(targets);
+        }
+
+        /// <summary>
         /// Appends a single location by GameLocation instance.
         /// </summary>
         /// 
@@ -127,6 +139,7 @@ namespace BotFramework.World
             }
 
             WorldTour tourGenerator = new WorldTour();
+
             tourGenerator.SetItems(locationParsers);
             tourGenerator.SetStart(locationParsers[0]);
 

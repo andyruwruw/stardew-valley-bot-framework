@@ -3,7 +3,7 @@
 namespace BotFramework.TemplateMethods
 {
     /// <summary>
-    /// <see cref="IPathfindingTemplate">IPathfindingTemplate</see> template method for finding best tour through a graph.
+    /// Template method for finding best tour through a graph.
     /// </summary>
     /// <remarks>
     /// <para>Current TSP Greedy implementation runs in O(n^2 * log n).</para>

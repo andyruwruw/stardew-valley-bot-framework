@@ -1,10 +1,12 @@
-﻿namespace BotFramework.Targets
+﻿using System;
+
+namespace BotFramework.Targets
 {
-    class TargetAction : Target
+    class TargetAction : Target<Object>
     {
         public TargetAction(
             string name,
-            Action action
+            Action<Object> action
         ) : base(
             name,
             validator: null,

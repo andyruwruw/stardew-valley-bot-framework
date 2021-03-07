@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using BotFramework.Locations;
+using System.Collections.Generic;
 
 namespace BotFramework.Targets
 {
@@ -6,7 +7,7 @@ namespace BotFramework.Targets
     /// Tile specific Target.
     /// Specifies what Tiles the bot should target, method by which tiles are found, call order, post selectors and the action to be performed.
     /// </summary>
-    class TargetTile : Target
+    class TargetTile : Target<Tile>
     {
         /// <summary>
         /// Instantiates a TileTarget, used to specify the query method and selection of tiles and the corresponding action to be performed.
@@ -20,8 +21,8 @@ namespace BotFramework.Targets
         /// <param name="selectors"></param>
         public TargetTile(
             string name,
-            Validator validator,
-            Action action,
+            Validator<Tile> validator,
+            Action<Tile> action,
             CallOrder callOrder = CallOrder.AtLocationStart,
             QueryBehavior query = QueryBehavior.DoForAll,
             IList<PostQuerySelector> selectors = null,

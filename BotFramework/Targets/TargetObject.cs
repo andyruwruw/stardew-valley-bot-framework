@@ -6,7 +6,7 @@ namespace BotFramework.Targets
     /// StardewValley.Object specific Target.
     /// Specifies what Objects the bot should target, method by which objects are found, call order, post selectors and the action to be performed.
     /// </summary>
-    class TargetObject : Target
+    class TargetObject : Target<StardewValley.Object>
     {
         /// <summary>
         /// Instantiates an ObjectTarget, used to specify the query method and selection of objects and the corresponding action to be performed.
@@ -20,8 +20,8 @@ namespace BotFramework.Targets
         /// <param name="selectors"></param>
         public TargetObject(
             string name,
-            Validator validator,
-            Action action,
+            Validator<StardewValley.Object> validator,
+            Action<StardewValley.Object> action,
             CallOrder callOrder = CallOrder.AtLocationStart,
             QueryBehavior query = QueryBehavior.DoForAll,
             IList<PostQuerySelector> selectors = null,

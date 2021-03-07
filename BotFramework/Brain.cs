@@ -148,7 +148,6 @@ namespace BotFramework
             if (this._beforeEachQueue.Count == 0 && this._afterEachQueue.Count == 0 && this._atLocationStartQueue.Count == 0)
             {
                 this.RetrieveAtLocationStartAction();
-                // Get next location
             }
 
             // Retrieve new BeforeEach and AfterEach if necessary
@@ -186,22 +185,24 @@ namespace BotFramework
 
                 return this._atLocationStartQueue.Dequeue();
             }
+
+            // Bot is finished
             return null;
         }
 
         private void RetrieveAtLocationStartAction()
         {
-
+            this._atLocationStartQueue = this._world.GetActions(this._atLocationStartTargets);
         }
 
         private void RetrieveBeforeEachActions()
         {
-
+            this._beforeEachQueue = this._world.GetActions(this._beforeEachTargets);
         }
 
         private void RetrieveAfterEachActions()
         {
-
+            this._beforeEachQueue = this._world.GetActions(this._beforeEachTargets);
         }
 
         private void InstantiateTargetLists()

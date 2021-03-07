@@ -1,5 +1,11 @@
 ﻿namespace BotFramework
 {
+    /// <summary>
+    /// Selectors applied after targets are found.
+    /// </summary>
+    /// <remarks>
+    /// Applied after targets are found, replacing the targets with spacially related targets.
+    /// </remarks>
     enum PostQuerySelector
     {
         /// <summary>

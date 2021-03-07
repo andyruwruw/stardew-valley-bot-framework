@@ -1,5 +1,4 @@
-﻿using BotFramework.Actions;
-using BotFramework.Locations;
+﻿using BotFramework.Locations;
 using BotFramework.TemplateMethods;
 using StardewValley;
 using System.Collections.Generic;
@@ -7,6 +6,12 @@ using System.Linq;
 
 namespace BotFramework.World
 {
+    /// <summary>
+    /// Find shortest tour through locations.
+    /// </summary>
+    /// <remarks>
+    /// Implements template method <see cref="TourTemplate{LocationParser}">TemplateMethods.TourTemplate</see>.
+    /// </remarks>
     class WorldTour : TourTemplate<ILocationParser>
     {
         protected override int[,] GenerateCostMatrix()

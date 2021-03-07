@@ -1,4 +1,6 @@
-﻿using Netcode;
+﻿using BotFramework.Actions;
+using BotFramework.Targets;
+using Netcode;
 using StardewValley;
 using System;
 using System.Collections.Generic;
@@ -6,17 +8,45 @@ using System.Collections.Generic;
 namespace BotFramework.Locations
 {
     /// <summary>
-    /// Generates Map instance for a GameLocation
+    /// Data access object for the GameLocation object.
     /// </summary>
     class LocationParser : ILocationParser
     {
+        /// <summary>
+        /// GameLocation instace
+        /// </summary>
         private GameLocation _location;
+
+        /// <summary>
+        /// GameLocation name or unique name
+        /// </summary>
         private string _name;
+
+        /// <summary>
+        /// Whether or not the map has been loaded
+        /// </summary>
         private bool _mapLoaded;
+
+        /// <summary>
+        /// Map instance containing all tiles
+        /// </summary>
         private Map _map;
+
+        /// <summary>
+        /// Whether or not the warp points have been loaded
+        /// </summary>
         private bool _warpsLoaded;
+
+        /// <summary>
+        /// Warp points for GameLocation
+        /// </summary>
         private List<Warp> _warps;
 
+        /// <summary>
+        /// Instantiates a LocationParser for a given GameLocation
+        /// </summary>
+        /// 
+        /// <param name="location">GameLocation instance</param>
         public LocationParser(GameLocation location)
         {
             this._location = location;
@@ -31,12 +61,15 @@ namespace BotFramework.Locations
             }
         }
 
-        public LocationParser(string name):this(location: null)
+        /// <summary>
+        /// Instantiates a LocationParser for a given GameLocation
+        /// </summary>
+        /// 
+        /// <param name="name">GameLocation name or unique name</param>
+        public LocationParser(string name) : this(location: null)
         {
             this._name = name;
         }
-
-        public LocationParser():this(Game1.currentLocation) { }
 
         /// <summary>
         /// Retrieve Map instance of location.
@@ -52,6 +85,11 @@ namespace BotFramework.Locations
             return this._map;
         }
 
+        /// <summary>
+        /// Retrieve warp points.
+        /// </summary>
+        /// 
+        /// <returns>List of warps</returns>
         public List<Warp> GetWarps()
         {
             if (!this._warpsLoaded)
@@ -61,12 +99,16 @@ namespace BotFramework.Locations
             return this._warps;
         }
 
+        /// <summary>
+        /// Retrieve's GameLocation name or unique name.
+        /// </summary>
+        /// 
+        /// <returns>GameLocation name or unique name</returns>
         public string GetName()
         {
             if (this._name == null && this._location != null)
             {
                 this._name = this._location.NameOrUniqueName;
-                
             }
             return this._name;
         }
@@ -107,6 +149,9 @@ namespace BotFramework.Locations
             this._mapLoaded = true;
         }
 
+        /// <summary>
+        /// Loads warps for GameLocation
+        /// </summary>
         private void LoadWarps()
         {
             this.GetLocation();
@@ -121,11 +166,72 @@ namespace BotFramework.Locations
             this._warpsLoaded = true;
         }
 
+        /// <summary>
+        /// Retrieves actions for a given set of targets.
+        /// </summary>
+        /// 
+        /// <param name="targets"></param>
+        /// <returns></returns>
+        public List<IAction> GetActions(IList<ITarget> targets)
+        {
+            List<IAction> actions = new List<IAction>();
+
+            foreach(Target target in targets)
+            {
+                if (target is TargetAction)
+                {
+
+                } else if (target is TargetCharacter)
+                {
+
+                } else if (target is TargetObject)
+                {
+
+                } else if (target is TargetTile)
+                {
+                    this.GetTargetTiles(target, actions);
+                }
+            }
+
+            return actions;
+        }
+
+        private void GetTargetTiles(ITarget target, IList<IAction> actions)
+        {
+            if (target.GetQueryBehavior() == QueryBehavior.DoForAll)
+            {
+                // Load map, find all items
+            }
+            else if (target.GetQueryBehavior() == QueryBehavior.DoForClosest)
+            {
+                // Breadth-first search
+            }
+            else if (target.GetQueryBehavior() == QueryBehavior.DoForFarthest)
+            {
+                // Load map, farthest item
+            }
+            else if (target.GetQueryBehavior() == QueryBehavior.WithinRange)
+            {
+                // Breadth-first search
+            }
+        }
+
+        /// <summary>
+        /// Overriden to only check for location name or unique name.
+        /// </summary>
+        /// 
+        /// <param name="obj">Other LocationParser</param>
+        /// <returns>Whether same location</returns>
         public override bool Equals(object obj)
         {
             return (obj is LocationParser && ((LocationParser)obj).GetName() == this.GetName());
         }
 
+        /// <summary>
+        /// Overriden to hash location name or unique name.
+        /// </summary>
+        /// 
+        /// <returns>Hashed location name or unique name</returns>
         public override int GetHashCode()
         {
             return this.GetName().GetHashCode();

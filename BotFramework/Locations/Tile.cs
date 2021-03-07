@@ -5,14 +5,29 @@ using System.Collections.Generic;
 
 namespace BotFramework.Locations
 {
-    /// <summary>
-    /// References to a Tile in a GameLocation
-    /// </summary>
+    /// <remarks>
+    /// Represents a single tile in a <see cref="StardewValley.GameLocation">GameLocation</see>
+    /// </remarks>
     class Tile : ITile
     {
+        /// <summary>
+        /// <see cref="StardewValley.GameLocation">GameLocation</see> name or unique name.
+        /// </summary>
         private string _locationName;
+
+        /// <summary>
+        /// X value of the tile in the <see cref="StardewValley.GameLocation">GameLocation</see>
+        /// </summary>
         private int _x;
+
+        /// <summary>
+        /// Y value of the tile in the <see cref="StardewValley.GameLocation">GameLocation</see>
+        /// </summary>
         private int _y;
+
+        /// <summary>
+        /// Whether the tile has been visted by target searches.
+        /// </summary>
         private List<bool> _visited;
 
         public Tile(string locationName, int x, int y)

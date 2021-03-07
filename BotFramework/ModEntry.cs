@@ -1,4 +1,4 @@
-﻿using BotFramework.Framework.Helpers;
+﻿using BotFramework.Helpers;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 
