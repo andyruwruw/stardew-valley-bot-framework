@@ -1,34 +1,95 @@
-﻿using BotFramework.Framework;
-using BotFramework.Framework.Helpers;
-using BotFramework.Framework.Targets;
+﻿using BotFramework.Helpers;
+using BotFramework.Targets;
 using StardewValley;
+using System;
 using System.Collections.Generic;
 
 namespace BotFramework
 {
-    abstract class Bot
+    /// <summary>
+    /// Bot class provides template method for developers to configure the framework.
+    /// </summary>
+    /// <remarks>
+    /// 
+    /// </remarks>
+    abstract class Bot : IBot
     {
+        /// <summary>
+        /// Whether or not the bot is running.
+        /// </summary>
         private bool _active = false;
-        private Brain _brain;
 
+        /// <summary>
+        /// Target management class.
+        /// </summary>
+        private IBrain _brain;
+
+        /// <summary>
+        /// Instantiates a Bot.
+        /// </summary>
+        /// <remarks>
+        /// <para><see href="https://www.youtube.com/watch?v=Yw6u6YkTgQ4">Your bot wakes up confused and lost.</see></para>
+        /// <para>Be a friend, treat him well.</para>
+        /// <para>Give him some <see cref="ITarget">Targets</see> for some purpose in life.</para>
+        /// </remarks>
+        ///
+        /// <param name="character"></param>
         public Bot() : this(Game1.player) { }
 
+        /// <summary>
+        /// Instantiates a Bot.
+        /// </summary>
+        /// <remarks>
+        /// <para><see href="https://www.youtube.com/watch?v=Yw6u6YkTgQ4">Your bot wakes up confused and lost.</see></para>
+        /// <para>Be a friend, treat him well.</para>
+        /// <para>Give him some <see cref="ITarget">Targets</see> for some purpose in life.</para>
+        /// </remarks>
+        ///
+        /// <param name="character"></param>
         public Bot(Character character)
         {
+            // Wake up friend
             this._brain = new Brain();
         }
 
-        public void SetTarget(Target target)
+        public void DefaultTargets()
         {
-            List<Target> targets = new List<Target>();
-            targets.Add(target);
-
+            List<ITarget> targets = new List<ITarget>();
             this._brain.SetTargets(targets);
         }
 
-        public void SetTargets(List<Target> targets)
+        public void SetTarget(ITarget target)
         {
+            List<ITarget> targets = new List<ITarget>();
+            targets.Add(target);
+
+            this.SetTargets(targets);
+        }
+
+        public void SetTargets(IList<ITarget> targets)
+        {
+            if (targets.Count == 0)
+            {
+                throw new ArgumentException("Targets cannot be empty.");
+            }
             this._brain.SetTargets(targets);
+        }
+
+        public void DefaultLocations()
+        {
+            List<GameLocation> locations = new List<GameLocation>();
+            locations.Add(Game1.currentLocation);
+            this._brain.SetLocations(locations);
+        }
+
+        public void SetLocation(GameLocation location)
+        {
+            this._brain.SetLocation(location);
+        }
+
+        public void SetLocation(string locationName)
+        {
+            this._brain.SetLocation(locationName);
         }
 
         /// <summary>
@@ -36,7 +97,7 @@ namespace BotFramework
         /// </summary>
         /// 
         /// <param name="locations">List of GameLocation instances</param>
-        public void SetLocations(List<GameLocation> locations)
+        public void SetLocations(IList<GameLocation> locations)
         {
             this._brain.SetLocations(locations);
         }
@@ -46,9 +107,9 @@ namespace BotFramework
         /// </summary>
         /// 
         /// <param name="locations">List of GameLocation instances</param>
-        public void SetLocations(List<string> locations)
+        public void SetLocations(IList<string> locationNames)
         {
-            this._brain.SetLocations(locations);
+            this._brain.SetLocations(locationNames);
         }
 
         /// <summary>
@@ -59,6 +120,8 @@ namespace BotFramework
             LogProxy.Log("Bot has begun work");
             this.StartCallback();
             this._active = true;
+
+            this._brain.Start();
         }
 
         /// <summary>
@@ -66,7 +129,7 @@ namespace BotFramework
         /// </summary>
         protected void StartCallback()
         {
-            
+            LogProxy.Log("Bot.StartCallback called with no override", true);
         }
 
         /// <summary>
@@ -74,7 +137,7 @@ namespace BotFramework
         /// </summary>
         protected void InterruptedCallback()
         {
-
+            LogProxy.Log("Bot.InterruptedCallback called with no override", true);
         }
 
         /// <summary>
@@ -82,12 +145,7 @@ namespace BotFramework
         /// </summary>
         protected void FinishCallback()
         {
-
+            LogProxy.Log("Bot.FinishCallback called with no override", true);
         }
-
-        /// <summary>
-        /// Action to perform at each block, required override
-        /// </summary>
-        protected abstract void PerformAction();
     }
 }

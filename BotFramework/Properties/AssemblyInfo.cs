@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("BotFramework")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Framework for creating bot mods on Stardew Valley")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("BotFramework")]

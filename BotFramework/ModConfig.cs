@@ -1,6 +1,6 @@
 ﻿namespace BotFramework
 {
-    class ModConfig
+    public class ModConfig
     {
         public bool DebugEnvironment { get; set; }
 

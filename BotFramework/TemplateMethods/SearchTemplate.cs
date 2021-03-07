@@ -1,0 +1,13 @@
+﻿namespace BotFramework.TemplateMethods
+{
+    /// <summary>
+    /// Template method for branching out to find a node, focuses on searching via breadth-first search.
+    /// </summary>
+    class SearchTemplate
+    {
+        public void Compute()
+        {
+
+        }
+    }
+}
