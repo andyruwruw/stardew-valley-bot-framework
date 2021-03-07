@@ -1,3 +1,7 @@
+<p align="center">
+<img src="https://github.com/andyruwruw/stardew-valley-bot-framework/blob/main/documentation/images/header.gif?raw=true" />
+</p>
+
 # Stardew Valley BotFramework
 
 This mod doesn't do anything on its own, however it offers developers a Framework to create bots to complete automated tasks.
