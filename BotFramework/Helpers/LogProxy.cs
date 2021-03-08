@@ -1,6 +1,6 @@
 ﻿using StardewModdingAPI;
 
-namespace BotFramework.Helpers
+namespace BotFramework
 {
     /// <summary>
     /// Handles Log Events

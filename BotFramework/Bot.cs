@@ -19,6 +19,10 @@ namespace BotFramework
         /// </summary>
         private bool _active = false;
 
+        private bool _locationsSet = false;
+
+        private bool _targetsSet = false;
+
         /// <summary>
         /// Target management class.
         /// </summary>
@@ -52,10 +56,11 @@ namespace BotFramework
             this._brain = new Brain();
         }
 
-        public void DefaultTargets()
+        public virtual void DefaultTargets()
         {
             List<ITarget> targets = new List<ITarget>();
-            this._brain.SetTargets(targets);
+            this.SetTargets(targets);
+            this._targetsSet = true;
         }
 
         public void SetTarget(ITarget target)
@@ -64,6 +69,7 @@ namespace BotFramework
             targets.Add(target);
 
             this.SetTargets(targets);
+            this._targetsSet = true;
         }
 
         public void SetTargets(IList<ITarget> targets)
@@ -73,23 +79,27 @@ namespace BotFramework
                 throw new ArgumentException("Targets cannot be empty.");
             }
             this._brain.SetTargets(targets);
+            this._targetsSet = true;
         }
 
-        public void DefaultLocations()
+        public virtual void DefaultLocations()
         {
             List<GameLocation> locations = new List<GameLocation>();
             locations.Add(Game1.currentLocation);
             this._brain.SetLocations(locations);
+            this._locationsSet = true;
         }
 
         public void SetLocation(GameLocation location)
         {
             this._brain.SetLocation(location);
+            this._locationsSet = true;
         }
 
         public void SetLocation(string locationName)
         {
             this._brain.SetLocation(locationName);
+            this._locationsSet = true;
         }
 
         /// <summary>
@@ -100,6 +110,7 @@ namespace BotFramework
         public void SetLocations(IList<GameLocation> locations)
         {
             this._brain.SetLocations(locations);
+            this._locationsSet = true;
         }
 
         /// <summary>
@@ -110,6 +121,7 @@ namespace BotFramework
         public void SetLocations(IList<string> locationNames)
         {
             this._brain.SetLocations(locationNames);
+            this._locationsSet = true;
         }
 
         /// <summary>
@@ -117,6 +129,15 @@ namespace BotFramework
         /// </summary>
         public void Start()
         {
+            if (!this._targetsSet)
+            {
+                this.DefaultTargets();
+            }
+            if (!this._locationsSet)
+            {
+                this.DefaultLocations();
+            }
+
             LogProxy.Log("Bot has begun work");
             this.StartCallback();
             this._active = true;
@@ -127,7 +148,7 @@ namespace BotFramework
         /// <summary>
         /// Run at the start of the process, optional override
         /// </summary>
-        protected void StartCallback()
+        protected virtual void StartCallback()
         {
             LogProxy.Log("Bot.StartCallback called with no override", true);
         }
@@ -135,7 +156,7 @@ namespace BotFramework
         /// <summary>
         /// Run at the end of the process, optional override
         /// </summary>
-        protected void InterruptedCallback()
+        protected virtual void InterruptedCallback()
         {
             LogProxy.Log("Bot.InterruptedCallback called with no override", true);
         }
@@ -143,7 +164,7 @@ namespace BotFramework
         /// <summary>
         /// Run at the end of the process, optional override
         /// </summary>
-        protected void FinishCallback()
+        protected virtual void FinishCallback()
         {
             LogProxy.Log("Bot.FinishCallback called with no override", true);
         }

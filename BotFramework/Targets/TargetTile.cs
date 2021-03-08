@@ -22,6 +22,7 @@ namespace BotFramework.Targets
         public TargetTile(
             string name,
             Validator<Tile> validator,
+            Condition<Tile> condition,
             Action<Tile> action,
             CallOrder callOrder = CallOrder.AtLocationStart,
             QueryBehavior query = QueryBehavior.DoForAll,
@@ -32,6 +33,7 @@ namespace BotFramework.Targets
         ) : base(
             name,
             validator,
+            condition,
             action,
             callOrder,
             query,

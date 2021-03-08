@@ -1,4 +1,6 @@
-﻿using StardewValley;
+﻿using BotFramework.Actions;
+using BotFramework.Targets;
+using StardewValley;
 using System.Collections.Generic;
 
 namespace BotFramework.Locations
@@ -15,5 +17,7 @@ namespace BotFramework.Locations
         List<Warp> GetWarps();
 
         string GetName();
+
+        Queue<IAction> GetActions(IList<ITarget> targets);
     }
 }

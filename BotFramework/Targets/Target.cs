@@ -1,4 +1,4 @@
-﻿using BotFramework.Locations;
+﻿using BotFramework.Characters;
 using StardewValley;
 using System.Collections.Generic;
 
@@ -11,8 +11,15 @@ namespace BotFramework.Targets
     /// <para>Specifies what items the bot should target, method by which targets are found, call order, post selectors and the action to be performed.</para>
     /// <para>See <see cref="TargetTile">TileTarget</see>, <see cref="TargetObject">ObjectTarget</see> and <see cref="TargetCharacter">CharacterTarget</see> for concrete classes.</para>
     /// </remarks>
-    abstract class Target<T>
+    abstract class Target<T> : ITarget
     {
+        protected static int numTargets = 0;
+
+        /// <summary>
+        /// Unique index of the target.
+        /// </summary>
+        private int _index;
+
         /// <summary>
         /// Unique name of the target.
         /// </summary>
@@ -22,6 +29,11 @@ namespace BotFramework.Targets
         /// Delegate for validating a target to be enqueued.
         /// </summary>
         private Validator<T> _validator;
+
+        /// <summary>
+        /// Whether to pursue target.
+        /// </summary>
+        private Condition<T> _condition;
 
         /// <summary>
         /// Delegate for the action to be performed on the target.
@@ -67,6 +79,7 @@ namespace BotFramework.Targets
         /// 
         /// <param name="name">Unique name of the Target type</param>
         /// <param name="validator">Delegate method used to verify items fit this target's selection</param>
+        /// <param name="condition">Delegate method used to confirm whether target should be found</param>
         /// <param name="action">Delegate method called when target is found and navigated to by the Bot</param>
         /// <param name="callOrder">Order by which the bot finds and focuses on targets. Within call order types, order by which the targets are passed into the Bot is upheld</param>
         /// <param name="query">Method by which targets should be found</param>
@@ -77,6 +90,7 @@ namespace BotFramework.Targets
         public Target(
             string name,
             Validator<T> validator,
+            Condition<T> condition,
             Action<T> action,
             CallOrder callOrder = CallOrder.AtLocationStart,
             QueryBehavior query = QueryBehavior.DoForAll,
@@ -86,8 +100,12 @@ namespace BotFramework.Targets
             int withinRangeLimit = 1
         )
         {
+            this._index = numTargets;
+            numTargets = numTargets + 1;
+
             this._name = name;
             this._validator = validator;
+            this._condition = condition;
             this._action = action;
             this._callOrder = callOrder;
             this._query = query;

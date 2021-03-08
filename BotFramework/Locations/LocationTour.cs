@@ -10,7 +10,7 @@ namespace BotFramework.Locations
     /// <remarks>
     /// Implements template method <see cref="TourTemplate{LocationParser}">TemplateMethods.TourTemplate</see>.
     /// </remarks>
-    class LocationTour : TourTemplate<ActionableLocation>
+    class LocationTour : TourTemplate<ITile>
     {
         protected override int[,] GenerateCostMatrix()
         {

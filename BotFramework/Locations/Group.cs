@@ -1,19 +1,21 @@
-﻿using BotFramework.Locations;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace BotFramework.Actions
+namespace BotFramework.Locations
 {
-    /// <summary>
+    // <summary>
     /// List of spacially related Tiles
     /// </summary>
-    class ActionableGroup
+    class Group
     {
         private string _locationName;
         private List<Tile> _items;
 
-        public ActionableGroup()
+        public Group()
         {
             this._items = new List<Tile>();
         }

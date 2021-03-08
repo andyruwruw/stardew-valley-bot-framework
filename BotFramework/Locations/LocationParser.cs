@@ -1,5 +1,6 @@
 ﻿using BotFramework.Actions;
 using BotFramework.Targets;
+using Microsoft.Xna.Framework;
 using Netcode;
 using StardewValley;
 using System;
@@ -142,7 +143,7 @@ namespace BotFramework.Locations
             {
                 for (int x = 0; x < this._location.map.Layers[0].LayerWidth; x++)
                 {
-                    this._map.Set(x, y, new Tile(this._name, x, y));
+                    this._map.Set(x, y, new Tile(this._name, x, y, this._location.terrainFeatures[new Vector2(y, x)]));
                 }
             }
 
@@ -172,11 +173,11 @@ namespace BotFramework.Locations
         /// 
         /// <param name="targets"></param>
         /// <returns></returns>
-        public List<IAction> GetActions(IList<ITarget> targets)
+        public Queue<IAction> GetActions(IList<ITarget> targets)
         {
-            List<IAction> actions = new List<IAction>();
+            Queue<IAction> actions = new Queue<IAction>();
 
-            foreach(Target target in targets)
+            foreach(ITarget target in targets)
             {
                 if (target is TargetAction)
                 {
@@ -196,7 +197,7 @@ namespace BotFramework.Locations
             return actions;
         }
 
-        private void GetTargetTiles(ITarget target, IList<IAction> actions)
+        private void GetTargetTiles(ITarget target, Queue<IAction> actions)
         {
             if (target.GetQueryBehavior() == QueryBehavior.DoForAll)
             {

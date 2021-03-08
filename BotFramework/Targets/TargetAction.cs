@@ -6,10 +6,12 @@ namespace BotFramework.Targets
     {
         public TargetAction(
             string name,
+            Condition<Object> condition,
             Action<Object> action
         ) : base(
             name,
             validator: null,
+            condition,
             action,
             callOrder: CallOrder.AtLocationStart,
             query: QueryBehavior.DoForAll,

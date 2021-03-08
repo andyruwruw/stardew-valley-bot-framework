@@ -1,6 +1,7 @@
 ﻿using BotFramework.Helpers;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
+using StardewValley;
 
 namespace BotFramework
 {
@@ -22,6 +23,7 @@ namespace BotFramework
         public override void Entry(IModHelper helper)
         {
             helper.Events.GameLoop.GameLaunched += this.onLaunched;
+            helper.Events.Input.ButtonPressed += this.OnButtonPressed;
         }
 
         private void onLaunched(object sender, GameLaunchedEventArgs e)
@@ -30,6 +32,21 @@ namespace BotFramework
 
             LogProxy.SetDebug(this.config.DebugEnvironment);
             LogProxy.SetMonitor(this.Monitor);
+        }
+
+        private void OnButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            // ignore if player hasn't loaded a save yet
+            if (!Context.IsWorldReady)
+                return;
+
+            if (e.Button == SButton.U)
+            {
+                this.Monitor.Log($"{Game1.player.Name} pressed {e.Button}.", LogLevel.Debug);
+                WaterBotTest bot = new WaterBotTest();
+
+                bot.Start();
+            }
         }
     }
 }

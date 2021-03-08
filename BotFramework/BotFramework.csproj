@@ -51,22 +51,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\ActionCharacter.cs" />
+    <Compile Include="Actions\ActionObject.cs" />
+    <Compile Include="Actions\ActionTile.cs" />
     <Compile Include="Bot.cs" />
     <Compile Include="Actions\Action.cs" />
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="Brain.cs" />
-    <Compile Include="Actions\ActionableGroup.cs" />
     <Compile Include="Characters\ICharacterController.cs" />
+    <Compile Include="Enums\ActionType.cs" />
     <Compile Include="Enums\CallOrder.cs" />
     <Compile Include="Enums\PostQuerySelector.cs" />
     <Compile Include="Enums\QueryBehavior.cs" />
+    <Compile Include="Enums\UpdateBehavior.cs" />
     <Compile Include="Helpers\LogProxy.cs" />
     <Compile Include="Helpers\Distance.cs" />
-    <Compile Include="Actions\ActionableLocation.cs" />
+    <Compile Include="Locations\Group.cs" />
+    <Compile Include="Locations\IGroup.cs" />
     <Compile Include="Locations\ILocationParser.cs" />
     <Compile Include="Locations\IMap.cs" />
     <Compile Include="Locations\ITile.cs" />
     <Compile Include="Locations\LocationParser.cs" />
+    <Compile Include="Locations\LocationSearch.cs" />
     <Compile Include="Locations\LocationTour.cs" />
     <Compile Include="Locations\Map.cs" />
     <Compile Include="Locations\Tile.cs" />
@@ -77,11 +83,11 @@
     <Compile Include="Targets\TargetObject.cs" />
     <Compile Include="Targets\TargetTile.cs" />
     <Compile Include="Targets\Target.cs" />
+    <Compile Include="WaterBotTest.cs" />
     <Compile Include="World\IWorldParser.cs" />
     <Compile Include="World\WorldParser.cs" />
     <Compile Include="TemplateMethods\FillTemplate.cs" />
     <Compile Include="TemplateMethods\TourTemplate.cs" />
-    <Compile Include="Actions\ActionableTile.cs" />
     <Compile Include="Characters\CharacterController.cs" />
     <Compile Include="World\WorldTour.cs" />
     <Compile Include="IBrain.cs" />

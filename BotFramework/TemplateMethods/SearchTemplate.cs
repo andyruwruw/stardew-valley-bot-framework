@@ -1,4 +1,5 @@
 ﻿using BotFramework.Locations;
+using BotFramework.Targets;
 
 namespace BotFramework.TemplateMethods
 {
@@ -8,9 +9,17 @@ namespace BotFramework.TemplateMethods
     /// <remarks>
     /// Current breadth-first search implementation will be blocked by any unwalkable tiles.
     /// </remarks>
-    class SearchTemplate
+    class SearchTemplate<T>
     {
-        private IMap _map;
+        private ITarget _target;
+
+        private IMap _map; 
+
+        public SearchTemplate(ITarget target, IMap map)
+        {
+            this._target = target;
+            this._map = map;
+        }
 
         public void Compute()
         {

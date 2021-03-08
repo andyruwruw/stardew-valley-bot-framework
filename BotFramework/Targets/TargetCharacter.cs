@@ -22,6 +22,7 @@ namespace BotFramework.Targets
         public TargetCharacter(
             string name,
             Validator<Character> validator,
+            Condition<Character> condition,
             Action<Character> action,
             CallOrder callOrder = CallOrder.AtLocationStart,
             QueryBehavior query = QueryBehavior.DoForAll,
@@ -32,6 +33,7 @@ namespace BotFramework.Targets
         ) : base(
             name,
             validator,
+            condition,
             action,
             callOrder,
             query,

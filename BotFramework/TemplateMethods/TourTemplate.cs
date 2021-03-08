@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using BotFramework.Helpers;
+using System.Collections.Generic;
 
 namespace BotFramework.TemplateMethods
 {
@@ -81,6 +82,24 @@ namespace BotFramework.TemplateMethods
         public void Compute()
         {
             this._ordered = new List<T>();
+
+            if (this._items.Contains(this._start))
+            {
+                if (this._items.IndexOf(this._start) != 0)
+                {
+                    this._items.Remove(this._start);
+                    this._items.Insert(0, this._start);
+                }
+            } else
+            {
+                this._items.Insert(0, this._start);
+            }
+
+            if (this._items.Count == 1)
+            {
+                this._ordered.Add(this._items[0]);
+                return;
+            }
 
             int[,] costMatrix = this.GenerateCostMatrix();
             int nodes = costMatrix.GetLength(0);

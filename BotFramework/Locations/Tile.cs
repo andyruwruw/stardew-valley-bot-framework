@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using StardewValley;
+using StardewValley.TerrainFeatures;
 using System;
 using System.Collections.Generic;
 
@@ -25,16 +26,23 @@ namespace BotFramework.Locations
         /// </summary>
         private int _y;
 
+        private TerrainFeature _terrainFeature;
+
+        private IList<Character> _characters;
+
+        private IList<StardewValley.Object> _objects;
+
         /// <summary>
         /// Whether the tile has been visted by target searches.
         /// </summary>
         private List<bool> _visited;
 
-        public Tile(string locationName, int x, int y)
+        public Tile(string locationName, int x, int y, TerrainFeature terrainFeature)
         {
             this._locationName = locationName;
             this._x = x;
             this._y = y;
+            this._terrainFeature = terrainFeature;
 
             this._visited = new List<bool>();
             this._visited.Add(false);
@@ -68,6 +76,11 @@ namespace BotFramework.Locations
         public int GetTileY()
         {
             return this._y;
+        }
+
+        public TerrainFeature GetTerrainFeature()
+        {
+            return this._terrainFeature;
         }
 
         /// <summary>

@@ -97,7 +97,7 @@ namespace BotFramework.World
         /// 
         /// <param name="targets">List of applicable targets for query.</param>
         /// <returns>List of actions</returns>
-        public List<IAction> GetActions(IList<ITarget> targets)
+        public Queue<IAction> GetActions(IList<ITarget> targets)
         {
             return this._ordered[this._current].GetActions(targets);
         }
@@ -135,8 +135,11 @@ namespace BotFramework.World
 
             foreach(GameLocation location in this._locations)
             {
+                LogProxy.Log($"adding {location.name}");
                 locationParsers.Add(new LocationParser(location));
             }
+
+            LogProxy.Log($"Location num {locationParsers.Count}");
 
             WorldTour tourGenerator = new WorldTour();
 
@@ -146,6 +149,11 @@ namespace BotFramework.World
             tourGenerator.Compute();
 
             this._ordered = tourGenerator.GetTour();
+
+            foreach(ILocationParser location in this._ordered)
+            {
+                LogProxy.Log($"LOCATION: {location.GetName()}");
+            }
 
             this._current = 0;
             this.path = new List<ILocationParser>();

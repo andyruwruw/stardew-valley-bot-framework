@@ -5,7 +5,6 @@ using BotFramework.Targets;
 using StardewValley;
 using System.Collections.Generic;
 using System;
-using Action = BotFramework.Actions.Action;
 
 namespace BotFramework
 {
@@ -96,7 +95,7 @@ namespace BotFramework
                 this.AddTarget(target);
             }
 
-            if (this._afterEachTargets.Count == 0)
+            if (this._atLocationStartTargets.Count == 0)
             {
                 throw new ArgumentException("At least 1 target must be of type CallOrder.AtLocationStart.");
             }

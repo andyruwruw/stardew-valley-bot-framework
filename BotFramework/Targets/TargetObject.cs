@@ -21,6 +21,7 @@ namespace BotFramework.Targets
         public TargetObject(
             string name,
             Validator<StardewValley.Object> validator,
+            Condition<StardewValley.Object> condition,
             Action<StardewValley.Object> action,
             CallOrder callOrder = CallOrder.AtLocationStart,
             QueryBehavior query = QueryBehavior.DoForAll,
@@ -31,6 +32,7 @@ namespace BotFramework.Targets
         ) : base(
             name,
             validator,
+            condition,
             action,
             callOrder,
             query,
