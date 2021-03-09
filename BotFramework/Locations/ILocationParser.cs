@@ -19,5 +19,11 @@ namespace BotFramework.Locations
         string GetName();
 
         Queue<IAction> GetActions(IList<ITarget> targets);
+
+        bool GetVisited();
+
+        void SetVisited(bool visited);
+
+        Tile WarpToTile(Warp warp);
     }
 }

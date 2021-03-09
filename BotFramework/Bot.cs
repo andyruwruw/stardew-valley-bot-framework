@@ -1,4 +1,5 @@
-﻿using BotFramework.Helpers;
+﻿using BotFramework.Actions;
+using BotFramework.Helpers;
 using BotFramework.Targets;
 using StardewValley;
 using System;
@@ -146,6 +147,10 @@ namespace BotFramework
             this._active = true;
 
             this._brain.Start(this._character.currentLocation);
+
+            IAction action = this._brain.GetNextAction();
+
+            LogProxy.Info($"{action}");
         }
 
         /// <summary>

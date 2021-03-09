@@ -1,4 +1,5 @@
 ﻿using BotFramework.Locations;
+using BotFramework.Structures;
 using BotFramework.TemplateMethods;
 using StardewValley;
 using System;
@@ -15,6 +16,8 @@ namespace BotFramework.World
     /// </remarks>
     class WorldTour : TourTemplate<ILocationParser>
     {
+        private Graph<ILocationParser> _graph;
+
         protected override int[,] GenerateCostMatrix()
         {
             // All found managed manually
@@ -40,6 +43,9 @@ namespace BotFramework.World
             // Queue for breadth-first search
             // To, From, Cost
             Queue<Tuple<ILocationParser, ILocationParser, int>> queue = new Queue<Tuple<ILocationParser, ILocationParser, int>>();
+            IList<string> visited = new List<string>();
+
+            // Add current location
             queue.Enqueue(new Tuple<ILocationParser, ILocationParser, int>(this._items[0], null, 0));
 
             // Find all locations needed
@@ -47,18 +53,33 @@ namespace BotFramework.World
             {
                 // Pop an item
                 Tuple<ILocationParser, ILocationParser, int> current = queue.Dequeue();
+
                 ILocationParser to = current.Item1;
                 ILocationParser from = current.Item2;
                 int cost = current.Item3;
 
+                // If visited continue
+                if (visited.Contains(to.GetName()))
+                {
+                    continue;
+                } else
+                {
+                    visited.Add(to.GetName());
+                }
+
                 int index = this._items.IndexOf(to);
                 int fromIndex = this._items.IndexOf(from);
 
-                LogProxy.Trace($"Here at {to.GetName()}");
+                // Populate Graph
+                this._graph.AddNode(to.GetName(), to);
+                if (from != null)
+                {
+                    this._graph.AddEdge(from.GetName(), to.GetName());
+                }
 
                 if (index == -1)
                 {
-                    LogProxy.Trace($"Not found, adding link to queue");
+                    // Not on our list, add connections
                     IList<Warp> connections = to.GetWarps();
 
                     foreach (Warp connection in connections)
@@ -70,22 +91,18 @@ namespace BotFramework.World
                 {
                     if (fromIndex != -1)
                     {
-                        LogProxy.Trace($"Found, adding connections");
+                        // Add all values from parent + 1
                         for (int i = 0; i < this._items.Count(); i++)
                         {
                             if (i != index)
                             {
-                                LogProxy.Trace($"New index {i} {fromIndex}");
-
                                 if (i == fromIndex)
                                 {
-                                    LogProxy.Trace($"Adding from indexes");
                                     costMatrix[i, index] = cost;
                                     costMatrix[index, i] = cost;
                                 }
                                 else if (costMatrix[i, fromIndex] != int.MaxValue)
                                 {
-                                    LogProxy.Trace($"Adding {i} {fromIndex} to {index} with value {costMatrix[i, fromIndex]}");
                                     costMatrix[i, index] = costMatrix[i, fromIndex] + cost;
                                     costMatrix[index, i] = costMatrix[i, fromIndex] + cost;
                                 }
@@ -93,6 +110,7 @@ namespace BotFramework.World
                         }
                     }
 
+                    // Enqueue all connections
                     IList<Warp> connections = to.GetWarps();
 
                     foreach (Warp connection in connections)
@@ -114,6 +132,11 @@ namespace BotFramework.World
             }
 
             return costMatrix;
+        }
+
+        public Graph<ILocationParser> GetGraph()
+        {
+            return this._graph;
         }
     }
 }

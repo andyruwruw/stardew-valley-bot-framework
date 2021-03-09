@@ -43,6 +43,8 @@ namespace BotFramework.Locations
         /// </summary>
         private List<Warp> _warps;
 
+        private bool _visited;
+
         /// <summary>
         /// Instantiates a LocationParser for a given GameLocation
         /// </summary>
@@ -55,6 +57,7 @@ namespace BotFramework.Locations
             this._map = new Map(this._name);
             this._warpsLoaded = false;
             this._warps = new List<Warp>();
+            this._visited = false;
 
             if (this._location != null)
             {
@@ -112,6 +115,25 @@ namespace BotFramework.Locations
                 this._name = this._location.NameOrUniqueName;
             }
             return this._name;
+        }
+
+        public bool GetVisited()
+        {
+            return this._visited;
+        }
+
+        public void SetVisited(bool visited)
+        {
+            this._visited = visited;
+        }
+
+        public Tile WarpToTile(Warp warp)
+        {
+            if (!this._warpsLoaded)
+            {
+                this.LoadWarps();
+            }
+            return this._map.Get(warp.X, warp.Y);
         }
 
         /// <summary>

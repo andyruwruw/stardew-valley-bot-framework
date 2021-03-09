@@ -13,7 +13,7 @@ namespace BotFramework.TemplateMethods
     {
         private ITarget _target;
 
-        private IMap _map; 
+        private IMap _map;
 
         public SearchTemplate(ITarget target, IMap map)
         {

@@ -157,11 +157,6 @@ namespace BotFramework.TemplateMethods
 
             foreach (int index in visitedRouteList)
             {
-                LogProxy.Info($"Visted ROute List: {index}");
-            }
-
-            foreach (int index in visitedRouteList)
-            {
                 this._ordered.Add(this._items[index]);
             }
         }

@@ -77,6 +77,7 @@
     <Compile Include="Locations\Map.cs" />
     <Compile Include="Locations\Tile.cs" />
     <Compile Include="Structures\Graph.cs" />
+    <Compile Include="TemplateMethods\PathTemplate.cs" />
     <Compile Include="TemplateMethods\SearchTemplate.cs" />
     <Compile Include="Targets\TargetAction.cs" />
     <Compile Include="Targets\TargetCharacter.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="TemplateMethods\FillTemplate.cs" />
     <Compile Include="TemplateMethods\TourTemplate.cs" />
     <Compile Include="Characters\CharacterController.cs" />
+    <Compile Include="World\WorldPath.cs" />
     <Compile Include="World\WorldTour.cs" />
     <Compile Include="IBrain.cs" />
     <Compile Include="IBot.cs" />

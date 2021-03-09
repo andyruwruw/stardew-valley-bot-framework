@@ -132,5 +132,20 @@ namespace BotFramework.Structures
         {
             return this._vertices[this._root];
         }
+
+        public Node GetNode(string id)
+        {
+            return this._vertices[id];
+        }
+
+        public ICollection<Node> GetAllNodes()
+        {
+            return this._vertices.Values;
+        }
+
+        public ICollection<string> GetAllNodesIds()
+        {
+            return this._vertices.Keys;
+        }
     }
 }

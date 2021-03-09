@@ -46,6 +46,6 @@ namespace BotFramework.World
         /// 
         /// <param name="targets">List of applicable targets for query.</param>
         /// <returns>List of actions</returns>
-        Queue<IAction> GetActions(IList<ITarget> targets);
+        Queue<IAction> GetActions(IList<ITarget> targets, CallOrder type);
     }
 }

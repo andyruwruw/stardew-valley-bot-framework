@@ -87,5 +87,11 @@ namespace BotFramework.Actions
         {
             this._items.Add(item);
         }
+
+        public override string ToString()
+        {
+            string targetName = this._target == null ? "None" : this._target.GetName();
+            return $"Action - Target: {targetName}, Stand: {this._stand.GetTileX()} {this._stand.GetTileY()}";
+        }
     }
 }

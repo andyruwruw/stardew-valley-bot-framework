@@ -191,17 +191,17 @@ namespace BotFramework
 
         private void RetrieveAtLocationStartAction()
         {
-            this._atLocationStartQueue = this._world.GetActions(this._atLocationStartTargets);
+            this._atLocationStartQueue = this._world.GetActions(this._atLocationStartTargets, CallOrder.AtLocationStart);
         }
 
         private void RetrieveBeforeEachActions()
         {
-            this._beforeEachQueue = this._world.GetActions(this._beforeEachTargets);
+            this._beforeEachQueue = this._world.GetActions(this._beforeEachTargets, CallOrder.BeforeEach);
         }
 
         private void RetrieveAfterEachActions()
         {
-            this._beforeEachQueue = this._world.GetActions(this._beforeEachTargets);
+            this._afterEachQueue = this._world.GetActions(this._beforeEachTargets, CallOrder.AfterEach);
         }
 
         private void InstantiateTargetLists()
