@@ -20,6 +20,8 @@ namespace BotFramework.World
 
         protected override int[,] GenerateCostMatrix()
         {
+            this._graph = new Graph<ILocationParser>();
+
             // All found managed manually
             bool allFound = false;
 

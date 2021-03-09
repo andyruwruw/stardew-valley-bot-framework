@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BotFramework.Structures
 {
-    abstract class Graph<T>
+    class Graph<T>
     {
         public class Node
         {
