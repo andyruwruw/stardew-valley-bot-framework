@@ -19,8 +19,28 @@ namespace BotFramework
         {
             if (!debug || _debugConfig)
             {
-                _monitor.Log(message);
+                _monitor.Log(message, LogLevel.Debug);
             }
+        }
+
+        /// <summary>
+        /// Logs message if in debug environment.
+        /// </summary>
+        ///
+        /// <param name="message">Message to be logged</param>
+        public static void Trace(string message)
+        {
+            _monitor.Log(message, LogLevel.Trace);
+        }
+
+        /// <summary>
+        /// Logs message.
+        /// </summary>
+        ///
+        /// <param name="message">Message to be logged</param>
+        public static void Info(string message)
+        {
+            _monitor.Log(message, LogLevel.Info);
         }
 
         /// <summary>

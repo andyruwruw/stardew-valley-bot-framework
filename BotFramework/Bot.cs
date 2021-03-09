@@ -28,6 +28,8 @@ namespace BotFramework
         /// </summary>
         private IBrain _brain;
 
+        private Character _character;
+
         /// <summary>
         /// Instantiates a Bot.
         /// </summary>
@@ -54,6 +56,7 @@ namespace BotFramework
         {
             // Wake up friend
             this._brain = new Brain();
+            this._character = character;
         }
 
         public virtual void DefaultTargets()
@@ -142,7 +145,7 @@ namespace BotFramework
             this.StartCallback();
             this._active = true;
 
-            this._brain.Start();
+            this._brain.Start(this._character.currentLocation);
         }
 
         /// <summary>

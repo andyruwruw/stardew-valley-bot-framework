@@ -1,6 +1,7 @@
 ﻿using BotFramework.Locations;
 using BotFramework.TemplateMethods;
 using StardewValley;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,13 +20,11 @@ namespace BotFramework.World
             // All found managed manually
             bool allFound = false;
 
-            // Initialize matrix and distance array
-            int[] distanceFrom = new int[this._items.Count];
+            // Initialize matrix
             int[,] costMatrix = new int[this._items.Count, this._items.Count];
 
             for (int i = 0; i < this._items.Count; i++)
             {
-                distanceFrom[i] = int.MaxValue;
                 for (int j = 0; j < this._items.Count; j++)
                 {
                     if (i == j)
@@ -39,56 +38,76 @@ namespace BotFramework.World
             }
 
             // Queue for breadth-first search
-            Queue<ILocationParser> queue = new Queue<ILocationParser>();
-            queue.Enqueue(this._items[0]);
+            // To, From, Cost
+            Queue<Tuple<ILocationParser, ILocationParser, int>> queue = new Queue<Tuple<ILocationParser, ILocationParser, int>>();
+            queue.Enqueue(new Tuple<ILocationParser, ILocationParser, int>(this._items[0], null, 0));
 
             // Find all locations needed
-            while (!allFound)
+            while (!allFound && queue.Count > 0)
             {
                 // Pop an item
-                ILocationParser current = queue.Dequeue();
+                Tuple<ILocationParser, ILocationParser, int> current = queue.Dequeue();
+                ILocationParser to = current.Item1;
+                ILocationParser from = current.Item2;
+                int cost = current.Item3;
 
-                int index = this._items.IndexOf(current);
+                int index = this._items.IndexOf(to);
+                int fromIndex = this._items.IndexOf(from);
 
-                if (index == -1 || distanceFrom[index] != int.MaxValue)
+                LogProxy.Trace($"Here at {to.GetName()}");
+
+                if (index == -1)
                 {
-                    // Visit
-                    for (int i = 0; i < distanceFrom.Count(); i++)
-                    {
-                        if (distanceFrom[i] != int.MaxValue)
-                        {
-                            distanceFrom[i] = distanceFrom[i] + 1;
-                        }
-                    }
-
-                    if (distanceFrom[index] != int.MaxValue)
-                    {
-                        distanceFrom[index] = 0;
-
-                        for (int i = 0; i < this._items.Count; i++)
-                        {
-                            if (i != index && distanceFrom[i] != int.MaxValue)
-                            {
-                                costMatrix[i, index] = distanceFrom[i];
-                                costMatrix[index, i] = distanceFrom[i];
-                            }
-                        }
-                    }
-
-                    IList<Warp> connections = current.GetWarps();
+                    LogProxy.Trace($"Not found, adding link to queue");
+                    IList<Warp> connections = to.GetWarps();
 
                     foreach (Warp connection in connections)
                     {
                         ILocationParser locationParser = new LocationParser(connection.TargetName);
-                        queue.Enqueue(locationParser);
+                        queue.Enqueue(new Tuple<ILocationParser, ILocationParser, int>(locationParser, from, cost + 1));
+                    }
+                } else
+                {
+                    if (fromIndex != -1)
+                    {
+                        LogProxy.Trace($"Found, adding connections");
+                        for (int i = 0; i < this._items.Count(); i++)
+                        {
+                            if (i != index)
+                            {
+                                LogProxy.Trace($"New index {i} {fromIndex}");
+
+                                if (i == fromIndex)
+                                {
+                                    LogProxy.Trace($"Adding from indexes");
+                                    costMatrix[i, index] = cost;
+                                    costMatrix[index, i] = cost;
+                                }
+                                else if (costMatrix[i, fromIndex] != int.MaxValue)
+                                {
+                                    LogProxy.Trace($"Adding {i} {fromIndex} to {index} with value {costMatrix[i, fromIndex]}");
+                                    costMatrix[i, index] = costMatrix[i, fromIndex] + cost;
+                                    costMatrix[index, i] = costMatrix[i, fromIndex] + cost;
+                                }
+                            }
+                        }
+                    }
+
+                    IList<Warp> connections = to.GetWarps();
+
+                    foreach (Warp connection in connections)
+                    {
+                        ILocationParser locationParser = new LocationParser(connection.TargetName);
+                        queue.Enqueue(new Tuple<ILocationParser, ILocationParser, int>(locationParser, to, 1));
                     }
 
                     allFound = true;
-                    foreach (int distance in distanceFrom)
+                    foreach (int distance in costMatrix)
                     {
                         if (distance == int.MaxValue)
                         {
                             allFound = false;
+                            break;
                         }
                     }
                 }

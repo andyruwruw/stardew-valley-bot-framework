@@ -38,7 +38,7 @@ namespace BotFramework.World
         /// <summary>
         /// Finds shortest path through all provided GameLocations
         /// </summary>
-        void GenerateActionableLocations();
+        void GenerateActionableLocations(GameLocation current);
 
         /// <summary>
         /// Returns actions based on targets for current location.

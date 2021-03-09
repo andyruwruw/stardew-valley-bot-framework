@@ -129,22 +129,19 @@ namespace BotFramework.World
             this.AddLocation(this.GetGameLocation(locationName));
         }
 
-        public void GenerateActionableLocations()
+        public void GenerateActionableLocations(GameLocation current)
         {
             IList<ILocationParser> locationParsers = new List<ILocationParser>();
 
             foreach(GameLocation location in this._locations)
             {
-                LogProxy.Log($"adding {location.name}");
                 locationParsers.Add(new LocationParser(location));
             }
-
-            LogProxy.Log($"Location num {locationParsers.Count}");
 
             WorldTour tourGenerator = new WorldTour();
 
             tourGenerator.SetItems(locationParsers);
-            tourGenerator.SetStart(locationParsers[0]);
+            tourGenerator.SetStart(new LocationParser(current));
 
             tourGenerator.Compute();
 

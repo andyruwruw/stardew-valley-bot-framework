@@ -104,6 +104,17 @@ namespace BotFramework.TemplateMethods
             int[,] costMatrix = this.GenerateCostMatrix();
             int nodes = costMatrix.GetLength(0);
 
+            for (int row = 0; row < nodes; row++)
+            {
+                string rowString = "";
+                for (int col = 0; col < nodes; col++)
+                {
+                    rowString += costMatrix[row, col].ToString();
+                    rowString += " ";
+                }
+                LogProxy.Info(rowString);
+            }
+
             // Utilizing TSP greedy
 
             int counter = 0;
@@ -146,7 +157,12 @@ namespace BotFramework.TemplateMethods
 
             foreach (int index in visitedRouteList)
             {
-                this._ordered.Add(this._items[index - 1]);
+                LogProxy.Info($"Visted ROute List: {index}");
+            }
+
+            foreach (int index in visitedRouteList)
+            {
+                this._ordered.Add(this._items[index]);
             }
         }
 

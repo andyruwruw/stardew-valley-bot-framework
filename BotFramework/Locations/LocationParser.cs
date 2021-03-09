@@ -157,11 +157,16 @@ namespace BotFramework.Locations
         {
             this.GetLocation();
 
+            IList<string> warpNames = new List<string>();
             NetObjectList<Warp> warps = this._location.warps;
 
             foreach (Warp warp in warps)
             {
-                this._warps.Add(warp);
+                if (!warpNames.Contains(warp.TargetName))
+                {
+                    this._warps.Add(warp);
+                    warpNames.Add(warp.TargetName);
+                }
             }
 
             this._warpsLoaded = true;

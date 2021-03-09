@@ -26,8 +26,9 @@ namespace BotFramework
 
         public override void DefaultLocations()
         {
-            List<GameLocation> locations = new List<GameLocation>();
-            locations.Add(Game1.currentLocation);
+            List<string> locations = new List<string>();
+            locations.Add("Farm");
+            locations.Add("BusStop");
             this.SetLocations(locations);
         }
 

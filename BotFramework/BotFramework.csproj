@@ -76,6 +76,7 @@
     <Compile Include="Locations\LocationTour.cs" />
     <Compile Include="Locations\Map.cs" />
     <Compile Include="Locations\Tile.cs" />
+    <Compile Include="Structures\Graph.cs" />
     <Compile Include="TemplateMethods\SearchTemplate.cs" />
     <Compile Include="Targets\TargetAction.cs" />
     <Compile Include="Targets\TargetCharacter.cs" />

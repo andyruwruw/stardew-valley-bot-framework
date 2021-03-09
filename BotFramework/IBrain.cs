@@ -23,7 +23,7 @@ namespace BotFramework
 
         void SetLocations(IList<string> locations);
 
-        void Start();
+        void Start(GameLocation current);
 
         IAction GetNextAction();
     }

@@ -135,10 +135,10 @@ namespace BotFramework
             this._world.SetLocations(locationNames);
         }
 
-        public void Start()
+        public void Start(GameLocation current)
         {
             // Get best tour through locations
-            this._world.GenerateActionableLocations();
+            this._world.GenerateActionableLocations(current);
         }
 
         public IAction GetNextAction()
