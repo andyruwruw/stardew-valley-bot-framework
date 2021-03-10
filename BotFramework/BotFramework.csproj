@@ -59,6 +59,7 @@
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="Brain.cs" />
     <Compile Include="Characters\ICharacterController.cs" />
+    <Compile Include="Characters\MovementController.cs" />
     <Compile Include="Enums\ActionType.cs" />
     <Compile Include="Enums\CallOrder.cs" />
     <Compile Include="Enums\PostQuerySelector.cs" />

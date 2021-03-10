@@ -3,6 +3,7 @@ using BotFramework.Targets;
 using Microsoft.Xna.Framework;
 using Netcode;
 using StardewValley;
+using StardewValley.TerrainFeatures;
 using System;
 using System.Collections.Generic;
 
@@ -127,13 +128,51 @@ namespace BotFramework.Locations
             this._visited = visited;
         }
 
-        public Tile WarpToTile(Warp warp)
+        public ITile WarpToTile(Warp warp)
         {
-            if (!this._warpsLoaded)
+            if (!this._mapLoaded)
             {
-                this.LoadWarps();
+                this.LoadMap();
             }
-            return this._map.Get(warp.X, warp.Y);
+
+            int X = warp.X < 0 ? 0 : warp.X;
+            int Y = warp.Y < 0 ? 0 : warp.Y;
+
+            if (X >= this._map.GetWidth())
+            {
+                X = this._map.GetWidth();
+            }
+            if (Y >= this._map.GetHeight())
+            {
+                Y = this._map.GetHeight();
+            }
+
+            return this._map.Get(X, Y);
+        }
+
+        public void DisplayMap()
+        {
+            for (int i = 0; i < this._map.GetHeight(); i++)
+            {
+                string row = "";
+                for (int j = 0; j < this._map.GetWidth(); j++)
+                {
+                    if (this.TileIsPassable(i, j))
+                    {
+                        row += "#";
+                    } else
+                    {
+                        row += " ";
+                    }
+                }
+                LogProxy.Info(row);
+            }
+        }
+
+        public bool TileIsPassable(int X, int Y)
+        {
+            this.GetLocation();
+            return this._location.isCollidingPosition(new Rectangle(Y * 64 + 1, X * 64 + 1, 62, 62), Game1.viewport, isFarmer: true, -1, glider: false, Game1.player);
         }
 
         /// <summary>
@@ -165,7 +204,13 @@ namespace BotFramework.Locations
             {
                 for (int x = 0; x < this._location.map.Layers[0].LayerWidth; x++)
                 {
-                    this._map.Set(x, y, new Tile(this._name, x, y, this._location.terrainFeatures[new Vector2(y, x)]));
+                    Vector2 index = new Vector2(y, x);
+                    TerrainFeature terrain = null;
+                    if (this._location.terrainFeatures.ContainsKey(index))
+                    {
+                        terrain = this._location.terrainFeatures[index];
+                    }
+                    this._map.Set(x, y, new Tile(this._name, x, y, terrain));
                 }
             }
 

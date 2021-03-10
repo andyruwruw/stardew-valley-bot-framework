@@ -24,6 +24,6 @@ namespace BotFramework.Locations
 
         void SetVisited(bool visited);
 
-        Tile WarpToTile(Warp warp);
+        ITile WarpToTile(Warp warp);
     }
 }

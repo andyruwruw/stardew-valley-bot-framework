@@ -12,5 +12,15 @@ namespace BotFramework.Characters
         public CharacterController(Character who) {
             this._who = who;
         }
-    }
+
+        public Character GetCharacter()
+        {
+            return this._who;
+        }
+
+        public GameLocation GetCurrentLocation()
+        {
+            return this._who.currentLocation;
+        }
+	}
 }

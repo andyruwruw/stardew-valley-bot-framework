@@ -1,4 +1,5 @@
 ﻿using BotFramework.Actions;
+using BotFramework.Characters;
 using BotFramework.Helpers;
 using BotFramework.Targets;
 using StardewValley;
@@ -16,66 +17,65 @@ namespace BotFramework
     abstract class Bot : IBot
     {
         /// <summary>
-        /// Whether or not the bot is running.
+        /// Whether the bot is running.
         /// </summary>
         private bool _active = false;
 
+        /// <summary>
+        /// Whether <see cref="GameLocation">Location</see> data has been set.
+        /// </summary>
         private bool _locationsSet = false;
 
+        /// <summary>
+        /// Whether <see cref="BotFramework.Targets.Target{T}">Target</see> data has been set.
+        /// </summary>
         private bool _targetsSet = false;
 
         /// <summary>
-        /// Target management class.
+        /// <see cref="BotFramework.Targets.Target{T}">Target</see> management class.
         /// </summary>
         private IBrain _brain;
 
-        private Character _character;
+        /// <summary>
+        /// <see cref="Character">Character</see> controller, facade for Character class.
+        /// </summary>
+        private ICharacterController _character;
 
         /// <summary>
         /// Instantiates a Bot.
         /// </summary>
         /// <remarks>
-        /// <para><see href="https://www.youtube.com/watch?v=Yw6u6YkTgQ4">Your bot wakes up confused and lost.</see></para>
-        /// <para>Be a friend, treat him well.</para>
+        /// <para>Your bot wakes up <see href="https://www.youtube.com/watch?v=Yw6u6YkTgQ4">confused and lost.</see> Be a friend, treat him well.</para>
         /// <para>Give him some <see cref="ITarget">Targets</see> for some purpose in life.</para>
         /// </remarks>
         ///
-        /// <param name="character"></param>
+        /// <param name="character"><see cref="Character">Character</see> the bot controls</param>
         public Bot() : this(Game1.player) { }
 
         /// <summary>
         /// Instantiates a Bot.
         /// </summary>
         /// <remarks>
-        /// <para><see href="https://www.youtube.com/watch?v=Yw6u6YkTgQ4">Your bot wakes up confused and lost.</see></para>
-        /// <para>Be a friend, treat him well.</para>
+        /// <para>Your bot wakes up <see href="https://www.youtube.com/watch?v=Yw6u6YkTgQ4">confused and lost.</see> Be a friend, treat him well.</para>
         /// <para>Give him some <see cref="ITarget">Targets</see> for some purpose in life.</para>
         /// </remarks>
         ///
-        /// <param name="character"></param>
+        /// <param name="character"><see cref="Character">Character</see> the bot controls</param>
         public Bot(Character character)
         {
             // Wake up friend
             this._brain = new Brain();
-            this._character = character;
+            this._character = new CharacterController(character);
         }
 
-        public virtual void DefaultTargets()
-        {
-            List<ITarget> targets = new List<ITarget>();
-            this.SetTargets(targets);
-            this._targetsSet = true;
-        }
-
-        public void SetTarget(ITarget target)
-        {
-            List<ITarget> targets = new List<ITarget>();
-            targets.Add(target);
-
-            this.SetTargets(targets);
-            this._targetsSet = true;
-        }
-
+        /// <summary>
+        /// Manual way of setting <see cref="BotFramework.Targets.Target{T}">Target</see> values.
+        /// </summary>
+        /// <remarks>
+        /// If your Bot's behavior is static, override <see cref="DefaultTargets">Bot.DefaultTargets</see> instead.
+        /// </remarks>
+        /// 
+        /// <param name="target">List of <see cref="BotFramework.Targets.Target{T}">Targets</see> to give the Bot purpose</param>
         public void SetTargets(IList<ITarget> targets)
         {
             if (targets.Count == 0)
@@ -86,31 +86,30 @@ namespace BotFramework
             this._targetsSet = true;
         }
 
-        public virtual void DefaultLocations()
+        /// <summary>
+        /// Manual way of setting <see cref="BotFramework.Targets.Target{T}">Target</see> values.
+        /// </summary>
+        /// <remarks>
+        /// If your Bot's behavior is static, override <see cref="DefaultTargets">Bot.DefaultTargets</see> instead.
+        /// </remarks>
+        /// 
+        /// <param name="target">List of <see cref="BotFramework.Targets.Target{T}">Targets</see> to give the Bot purpose</param>
+        public void SetTargets(ITarget target)
         {
-            List<GameLocation> locations = new List<GameLocation>();
-            locations.Add(Game1.currentLocation);
-            this._brain.SetLocations(locations);
-            this._locationsSet = true;
-        }
+            List<ITarget> targets = new List<ITarget>();
+            targets.Add(target);
 
-        public void SetLocation(GameLocation location)
-        {
-            this._brain.SetLocation(location);
-            this._locationsSet = true;
-        }
-
-        public void SetLocation(string locationName)
-        {
-            this._brain.SetLocation(locationName);
-            this._locationsSet = true;
+            this.SetTargets(targets);
         }
 
         /// <summary>
-        /// Sets list of locations by GameLocation objects.
+        /// Manual way of setting <see cref="GameLocation">GameLocation</see> values.
         /// </summary>
+        /// <remarks>
+        /// If your Bot's behavior is static, override <see cref="DefaultLocations">Bot.DefaultLocations</see> instead.
+        /// </remarks>
         /// 
-        /// <param name="locations">List of GameLocation instances</param>
+        /// <param name="target">List of <see cref="GameLocation">GameLocations</see> to tell the Bot where you want it to work</param>
         public void SetLocations(IList<GameLocation> locations)
         {
             this._brain.SetLocations(locations);
@@ -118,10 +117,13 @@ namespace BotFramework
         }
 
         /// <summary>
-        /// Sets list of locations by location names or unique names.
+        /// Manual way of setting <see cref="GameLocation">GameLocation</see> values.
         /// </summary>
+        /// <remarks>
+        /// If your Bot's behavior is static, override <see cref="DefaultLocations">Bot.DefaultLocations</see> instead.
+        /// </remarks>
         /// 
-        /// <param name="locations">List of GameLocation instances</param>
+        /// <param name="target">List of <see cref="GameLocation">GameLocations</see> to tell the Bot where you want it to work</param>
         public void SetLocations(IList<string> locationNames)
         {
             this._brain.SetLocations(locationNames);
@@ -129,7 +131,39 @@ namespace BotFramework
         }
 
         /// <summary>
-        /// Begins the bot process (trigger).
+        /// Manual way of setting <see cref="GameLocation">GameLocation</see> values.
+        /// </summary>
+        /// <remarks>
+        /// If your Bot's behavior is static, override <see cref="DefaultLocations">Bot.DefaultLocations</see> instead.
+        /// </remarks>
+        /// 
+        /// <param name="target">List of <see cref="GameLocation">GameLocations</see> to tell the Bot where you want it to work</param>
+        public void SetLocations(GameLocation location)
+        {
+            IList<GameLocation> locations = new List<GameLocation>();
+            locations.Add(location);
+
+            this.SetLocations(locations);
+        }
+
+        /// <summary>
+        /// Manual way of setting <see cref="GameLocation">GameLocation</see> values.
+        /// </summary>
+        /// <remarks>
+        /// If your Bot's behavior is static, override <see cref="DefaultLocations">Bot.DefaultLocations</see> instead.
+        /// </remarks>
+        /// 
+        /// <param name="target">List of <see cref="GameLocation">GameLocations</see> to tell the Bot where you want it to work</param>
+        public void SetLocations(string locationName)
+        {
+            IList<string> locationNames = new List<string>();
+            locationNames.Add(locationName);
+
+            this.SetLocations(locationNames);
+        }
+
+        /// <summary>
+        /// Begins the Bot process (trigger).
         /// </summary>
         public void Start()
         {
@@ -142,15 +176,44 @@ namespace BotFramework
                 this.DefaultLocations();
             }
 
-            LogProxy.Log("Bot has begun work");
+            LogProxy.Info("Bot has been triggered to start");
             this.StartCallback();
             this._active = true;
 
-            this._brain.Start(this._character.currentLocation);
+            this._brain.Start(this._character.GetCurrentLocation());
 
             IAction action = this._brain.GetNextAction();
 
-            LogProxy.Info($"{action}");
+            LogProxy.Trace($"{action.ToString()}");
+        }
+
+        /// <summary>
+        /// Automatically run in absence of <see cref="BotFramework.Targets.Target{T}">Targets</see>.
+        /// </summary>
+        /// <remarks>
+        /// <para>Easiest way to set <see cref="BotFramework.Targets.Target{T}">Targets</see> is by overriding this method.</para>
+        /// <para>It will automatically be called and you don't have to worry about instantiating them later.</para>
+        /// </remarks>
+        protected virtual void DefaultTargets()
+        {
+            List<ITarget> targets = new List<ITarget>();
+            this.SetTargets(targets);
+            this._targetsSet = true;
+        }
+
+        /// <summary>
+        /// Automatically run in absence of <see cref="GameLocation">GameLocations</see>.
+        /// </summary>
+        /// <remarks>
+        /// <para>Easiest way to set <see cref="GameLocation">GameLocations</see> is by overriding this method.</para>
+        /// <para>It will automatically be called and you don't have to worry about passing them in later.</para>
+        /// </remarks>
+        protected virtual void DefaultLocations()
+        {
+            List<GameLocation> locations = new List<GameLocation>();
+            locations.Add(Game1.currentLocation);
+            this._brain.SetLocations(locations);
+            this._locationsSet = true;
         }
 
         /// <summary>
@@ -158,7 +221,7 @@ namespace BotFramework
         /// </summary>
         protected virtual void StartCallback()
         {
-            LogProxy.Log("Bot.StartCallback called with no override", true);
+            LogProxy.Trace("Bot.StartCallback called with no override");
         }
 
         /// <summary>
@@ -166,7 +229,7 @@ namespace BotFramework
         /// </summary>
         protected virtual void InterruptedCallback()
         {
-            LogProxy.Log("Bot.InterruptedCallback called with no override", true);
+            LogProxy.Trace("Bot.InterruptedCallback called with no override");
         }
 
         /// <summary>
@@ -174,7 +237,7 @@ namespace BotFramework
         /// </summary>
         protected virtual void FinishCallback()
         {
-            LogProxy.Log("Bot.FinishCallback called with no override", true);
+            LogProxy.Trace("Bot.FinishCallback called with no override");
         }
     }
 }

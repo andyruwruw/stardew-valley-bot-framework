@@ -97,28 +97,61 @@ namespace BotFramework.TemplateMethods
 
             while (this.QueueCount() > 0)
             {
-                string next = this._dist.Aggregate((l, r) => l.Value < r.Value ? l : r).Key;
+                string next = this.GetLowestKey();
+
+                this._visited[next] = true;
 
                 IList<string> edges = this.GetEdges(next);
 
                 foreach (string edge in edges)
                 {
-                    if (this._dist[edge] > this._dist[next] + 1)
+                    if (this._dist.ContainsKey(edge))
                     {
-                        this._dist[edge] = this._dist[next] + 1;
-                        this._prev[edge] = next;
+                        if (this._dist[edge] > this._dist[next] + 1)
+                        {
+                            this._dist[edge] = this._dist[next] + 1;
+                            this._prev[edge] = next;
+                        }
                     }
                 }
             }
+        }
+
+        public string GetLowestKey()
+        {
+            string first = null;
+            int lowest = int.MaxValue;
+            string lowestId = null;
+
+            foreach (string key in this.GetAllNodeID())
+            {
+                if (!this._visited[key])
+                {
+                    if (first == null)
+                    {
+                        first = key;
+                    }
+                    if (this._dist[key] < lowest)
+                    {
+                        lowestId = key;
+                    }
+                }
+            }
+
+            if (lowestId == null)
+            {
+                return first;
+            }
+            return lowestId;
         }
 
         protected int QueueCount()
         {
             int count = 0;
 
-            foreach (int distance in this._dist.Values)
+            foreach (string key in this._dist.Keys)
             {
-                if (distance == int.MaxValue)
+                if (!this._visited[key])
                 {
                     count += 1;
                 }

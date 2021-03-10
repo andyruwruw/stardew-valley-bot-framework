@@ -91,6 +91,9 @@ namespace BotFramework.Actions
         public override string ToString()
         {
             string targetName = this._target == null ? "None" : this._target.GetName();
+            LogProxy.Info($"targetname {targetName}");
+            LogProxy.Info($"Tile exits {this._stand == null}");
+            LogProxy.Info($"Tile x {this._stand.GetTileX()} {this._stand.GetTileY()}");
             return $"Action - Target: {targetName}, Stand: {this._stand.GetTileX()} {this._stand.GetTileY()}";
         }
     }

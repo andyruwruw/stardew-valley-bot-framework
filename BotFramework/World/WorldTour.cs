@@ -66,18 +66,12 @@ namespace BotFramework.World
                     continue;
                 } else
                 {
+                    this._graph.AddNode(to.GetName(), to);
                     visited.Add(to.GetName());
                 }
 
                 int index = this._items.IndexOf(to);
                 int fromIndex = this._items.IndexOf(from);
-
-                // Populate Graph
-                this._graph.AddNode(to.GetName(), to);
-                if (from != null)
-                {
-                    this._graph.AddEdge(from.GetName(), to.GetName());
-                }
 
                 if (index == -1)
                 {
@@ -86,6 +80,7 @@ namespace BotFramework.World
 
                     foreach (Warp connection in connections)
                     {
+                        this._graph.AddEdge(connection.TargetName, to.GetName());
                         ILocationParser locationParser = new LocationParser(connection.TargetName);
                         queue.Enqueue(new Tuple<ILocationParser, ILocationParser, int>(locationParser, from, cost + 1));
                     }
@@ -117,6 +112,7 @@ namespace BotFramework.World
 
                     foreach (Warp connection in connections)
                     {
+                        this._graph.AddEdge(connection.TargetName, to.GetName());
                         ILocationParser locationParser = new LocationParser(connection.TargetName);
                         queue.Enqueue(new Tuple<ILocationParser, ILocationParser, int>(locationParser, to, 1));
                     }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BotFramework.Enums
 {
+    /// <summary>
+    /// How often targets are validated and conditions are checked
+    /// </summary>
     enum UpdateBehavior
     {
         Once,

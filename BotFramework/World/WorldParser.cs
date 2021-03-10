@@ -20,6 +20,7 @@ namespace BotFramework.World
         private IList<GameLocation> _locations;
 
         private int _current;
+
         private Queue<ILocationParser> _path;
 
         private IList<ILocationParser> _ordered;
@@ -159,14 +160,19 @@ namespace BotFramework.World
             bool isAtLocationStart = type == CallOrder.AtLocationStart;
             bool itemsInPath = this._path.Count > 0;
 
+            if (this._path.Count > 1)
+            {
+                return this.ActionToWarp();
+            }
+
             if ((isStart && !startInList) || (currVisited && isAtLocationStart) || itemsInPath)
             {
-                if (this._path.Count > 1)
-                {
-                    return this.ActionToWarp();
-                } else
+                if (this._path.Count == 1)
                 {
                     this._path.Dequeue();
+                } else
+                {
+                    return this.ActionToWarp();
                 }
             }
 
@@ -177,28 +183,7 @@ namespace BotFramework.World
             return this._ordered[this._current].GetActions(targets);
         }
 
-        private void FindPathToNextLocation()
-        {
-            this._path = new Queue<ILocationParser>();
-
-            WorldPath pathGenerator = new WorldPath(this._graph);
-            pathGenerator.Compute();
-
-            IList<string> path = pathGenerator.GetTour(this._ordered[this._current + 1].GetName());
-
-            for (int i = 1; i < path.Count; i++)
-            {
-                this._path.Enqueue(new LocationParser(path[i]));
-            }
-
-            LogProxy.Info("Path to first actual location");
-            foreach (LocationParser location in this._path)
-            {
-                LogProxy.Info($"Location: {location.GetName()}");
-            }
-        }
-
-        public Queue<IAction> ActionToWarp()
+        private Queue<IAction> ActionToWarp()
         {
             Queue<IAction> actions = new Queue<IAction>();
 
@@ -223,6 +208,22 @@ namespace BotFramework.World
             }
 
             return actions;
+        }
+
+        private void FindPathToNextLocation()
+        {
+            this._path = new Queue<ILocationParser>();
+
+            WorldPath pathGenerator = new WorldPath(this._graph);
+            pathGenerator.SetStart(this._ordered[this._current].GetName());
+            pathGenerator.Compute();
+
+            IList<string> path = pathGenerator.GetTour(this._ordered[this._current + 1].GetName());
+
+            for (int i = 1; i < path.Count; i++)
+            {
+                this._path.Enqueue(new LocationParser(path[i]));
+            }
         }
     }
 }

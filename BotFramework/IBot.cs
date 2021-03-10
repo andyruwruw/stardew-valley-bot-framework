@@ -12,34 +12,68 @@ namespace BotFramework
     /// </remarks>
     interface IBot
     {
-        void DefaultTargets();
-
-        void SetTarget(ITarget target);
-
+        /// <summary>
+        /// Manual way of setting <see cref="BotFramework.Targets.Target{T}">Target</see> values.
+        /// </summary>
+        /// <remarks>
+        /// If your Bot's behavior is static, override <see cref="DefaultTargets">Bot.DefaultTargets</see> instead.
+        /// </remarks>
+        /// 
+        /// <param name="target">List of <see cref="BotFramework.Targets.Target{T}">Targets</see> to give the Bot purpose</param>
         void SetTargets(IList<ITarget> targets);
 
-        void DefaultLocations();
-
-        void SetLocation(GameLocation location);
-
-        void SetLocation(string locationName);
+        /// <summary>
+        /// Manual way of setting <see cref="BotFramework.Targets.Target{T}">Target</see> values.
+        /// </summary>
+        /// <remarks>
+        /// If your Bot's behavior is static, override <see cref="DefaultTargets">Bot.DefaultTargets</see> instead.
+        /// </remarks>
+        /// 
+        /// <param name="target">List of <see cref="BotFramework.Targets.Target{T}">Targets</see> to give the Bot purpose</param>
+        void SetTargets(ITarget target);
 
         /// <summary>
-        /// Sets list of locations by GameLocation objects.
+        /// Manual way of setting <see cref="GameLocation">GameLocation</see> values.
         /// </summary>
+        /// <remarks>
+        /// If your Bot's behavior is static, override <see cref="DefaultLocations">Bot.DefaultLocations</see> instead.
+        /// </remarks>
         /// 
-        /// <param name="locations">List of GameLocation instances</param>
+        /// <param name="target">List of <see cref="GameLocation">GameLocations</see> to tell the Bot where you want it to work</param>
         void SetLocations(IList<GameLocation> locations);
 
         /// <summary>
-        /// Sets list of locations by location names or unique names.
+        /// Manual way of setting <see cref="GameLocation">GameLocation</see> values.
         /// </summary>
+        /// <remarks>
+        /// If your Bot's behavior is static, override <see cref="DefaultLocations">Bot.DefaultLocations</see> instead.
+        /// </remarks>
         /// 
-        /// <param name="locations">List of GameLocation instances</param>
+        /// <param name="target">List of <see cref="GameLocation">GameLocations</see> to tell the Bot where you want it to work</param>
         void SetLocations(IList<string> locationNames);
 
         /// <summary>
-        /// Begins the bot process (trigger).
+        /// Manual way of setting <see cref="GameLocation">GameLocation</see> values.
+        /// </summary>
+        /// <remarks>
+        /// If your Bot's behavior is static, override <see cref="DefaultLocations">Bot.DefaultLocations</see> instead.
+        /// </remarks>
+        /// 
+        /// <param name="target">List of <see cref="GameLocation">GameLocations</see> to tell the Bot where you want it to work</param>
+        void SetLocations(GameLocation location);
+
+        /// <summary>
+        /// Manual way of setting <see cref="GameLocation">GameLocation</see> values.
+        /// </summary>
+        /// <remarks>
+        /// If your Bot's behavior is static, override <see cref="DefaultLocations">Bot.DefaultLocations</see> instead.
+        /// </remarks>
+        /// 
+        /// <param name="target">List of <see cref="GameLocation">GameLocations</see> to tell the Bot where you want it to work</param>
+        void SetLocations(string locationName);
+
+        /// <summary>
+        /// Begins the Bot process (trigger).
         /// </summary>
         void Start();
     }
