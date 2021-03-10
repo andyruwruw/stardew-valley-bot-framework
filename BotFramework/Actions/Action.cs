@@ -17,21 +17,13 @@ namespace BotFramework.Actions
         /// </summary>
         private ITarget _target;
 
-        /// <summary>
-        /// <see cref="Tile">Tile</see> of where to stand
-        /// </summary>
-        private ITile _stand;
+        private ILocationParser _locationParser;
 
-        /// <summary>
-        /// Where to execute actions
-        /// </summary>
-        private IList<T> _items;
-
-        public Action(ITarget target, ActionType actionType = ActionType.NavigateAndExecute)
+        public Action(ITarget target, ActionType actionType = ActionType.NavigateAndExecute, ILocationParser locationParser)
         {
             this._target = target;
             this._actionType = actionType;
-            this._items = new List<T>();
+            this._locationParser = locationParser;
         }
 
         /// <summary>
@@ -44,57 +36,22 @@ namespace BotFramework.Actions
         }
 
         /// <summary>
-        /// Retrieves the <see cref="Target">Target</see> for a given item.
+        /// Retrieves the <see cref="Target">Target</see> for the action.
         /// </summary>
-        /// <returns><see cref="Target">Target</see></returns>
+        /// <returns><see cref="Target">Target</see> of action</returns>
         public ITarget GetTarget()
         {
             return this._target;
         }
 
         /// <summary>
-        /// Retrieves where the bot should stand to execute actions.
+        /// Retrieves the <see cref="LocationParser">LocationParser</see> for the action.
         /// </summary>
         /// 
-        /// <returns><see cref="Tile">Tile</see> of where bot should stand.</returns>
-        public ITile GetStand()
+        /// <returns><see cref="LocationParser">LocationParser</see> of action</returns>
+        public ILocationParser GetLocationParser()
         {
-            return this._stand;
-        }
-
-        /// <summary>
-        /// Sets where the bot should stand to execute actions.
-        /// </summary>
-        public void SetStand(ITile stand)
-        {
-            this._stand = stand;
-        }
-
-        /// <summary>
-        /// Retrieves on what targets the bot should execute actions.
-        /// </summary>
-        /// 
-        /// <returns>List of items to execute actions on.</returns>
-        public IList<T> GetItems()
-        {
-            return this._items;
-        }
-
-        /// <summary>
-        /// Adds target the bot should execute actions.
-        /// </summary>
-        public void AddItem(T item)
-        {
-            this._items.Add(item);
-        }
-
-        public override string ToString()
-        {
-            string targetName = this._target == null ? "None" : this._target.GetName();
-            LogProxy.Info($"targetname {targetName}");
-            LogProxy.Info($"Tile exits {this._stand == null}");
-            LogProxy.Info($"Tile x {this._stand.GetTileX()} {this._stand.GetTileY()}");
-            return $"Action - Target: {targetName}, Stand: {this._stand.GetTileX()} {this._stand.GetTileY()}";
+            return this._locationParser;
         }
     }
 }

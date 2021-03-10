@@ -14,21 +14,16 @@ namespace BotFramework.Actions
         ActionType GetActionType();
 
         /// <summary>
-        /// Retrieves the <see cref="Target">Target</see> for a given item.
+        /// Retrieves the <see cref="Target">Target</see> for the action.
         /// </summary>
-        /// <returns><see cref="Target">Target</see></returns>
+        /// <returns><see cref="Target">Target</see> of action</returns>
         ITarget GetTarget();
 
         /// <summary>
-        /// Retrieves where the bot should stand to execute actions.
+        /// Retrieves the <see cref="LocationParser">LocationParser</see> for the action.
         /// </summary>
         /// 
-        /// <returns><see cref="Tile">Tile</see> of where bot should stand.</returns>
-        ITile GetStand();
-
-        /// <summary>
-        /// Sets where the bot should stand to execute actions.
-        /// </summary>
-        void SetStand(ITile stand);
+        /// <returns><see cref="LocationParser">LocationParser</see> of action</returns>
+        ILocationParser GetLocationParser();
     }
 }
