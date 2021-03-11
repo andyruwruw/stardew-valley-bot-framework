@@ -1,4 +1,5 @@
-﻿using BotFramework.Targets;
+﻿using BotFramework.Locations;
+using BotFramework.Targets;
 using StardewValley;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,14 @@ namespace BotFramework.Actions
     {
         public ActionCharacter(
             ITarget target,
-            ActionType actionType = ActionType.NavigateAndExecute
-        ) : base(target, actionType)
-        { }
+            Character directObject,
+            ILocationParser locationParser,
+            ActionType actionType = ActionType.Execute
+        ) : base(
+            target,
+            directObject,
+            locationParser,
+            actionType
+        ) { }
     }
 }

@@ -200,8 +200,7 @@ namespace BotFramework.World
             {
                 if (warp.TargetName == next.GetName())
                 {
-                    IAction action = new ActionTile(null, ActionType.Navigate);
-                    action.SetStand(this._ordered[this._current].WarpToTile(warp));
+                    IAction action = new ActionTile(null, this._ordered[this._current].WarpToTile(warp), this._ordered[this._current], ActionType.Navigate);
                     actions.Enqueue(action);
                     break;
                 }

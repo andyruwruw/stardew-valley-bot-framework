@@ -15,7 +15,7 @@ namespace BotFramework
     {
         public WaterBotTest() : base() { }
 
-        public override void DefaultTargets()
+        protected override void DefaultTargets()
         {
             List<ITarget> targets = new List<ITarget>();
 
@@ -24,7 +24,7 @@ namespace BotFramework
             this.SetTargets(targets);
         }
 
-        public override void DefaultLocations()
+        protected override void DefaultLocations()
         {
             List<string> locations = new List<string>();
             locations.Add("Farm");

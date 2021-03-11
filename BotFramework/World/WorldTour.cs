@@ -16,8 +16,29 @@ namespace BotFramework.World
     /// </remarks>
     class WorldTour : TourTemplate<ILocationParser>
     {
+        /// <summary>
+        /// Stored graph while searching.
+        /// </summary>
         private Graph<ILocationParser> _graph;
 
+        /// <summary>
+        /// Retrieves generated graph.
+        /// </summary>
+        /// 
+        /// <returns><see cref="Graph">Graph</see> of <see cref="ILocationParser">Locations</see></returns>
+        public Graph<ILocationParser> GetGraph()
+        {
+            return this._graph;
+        }
+
+        /// <summary>
+        /// Generates cost matrix from every location to every other.
+        /// </summary>
+        /// <remarks>
+        /// Overrides <see cref="TourTemplate{T}.GenerateCostMatrix">TourTemplate.GenerateCostMatrix</see>
+        /// </remarks>
+        /// 
+        /// <returns>Cost matrix</returns>
         protected override int[,] GenerateCostMatrix()
         {
             this._graph = new Graph<ILocationParser>();
@@ -130,11 +151,6 @@ namespace BotFramework.World
             }
 
             return costMatrix;
-        }
-
-        public Graph<ILocationParser> GetGraph()
-        {
-            return this._graph;
         }
     }
 }

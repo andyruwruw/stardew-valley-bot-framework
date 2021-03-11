@@ -13,6 +13,9 @@ namespace BotFramework.Targets
     /// </remarks>
     abstract class Target<T> : ITarget
     {
+        /// <summary>
+        /// Static number of targets
+        /// </summary>
         protected static int numTargets = 0;
 
         /// <summary>
@@ -200,6 +203,19 @@ namespace BotFramework.Targets
         public bool IsTarget(T item)
         {
             return this._validator(item);
+        }
+
+        /// <summary>
+        /// Validates search for tearget.
+        /// </summary>
+        /// 
+        /// <param name="who"><see cref="Character">Character</see> instance of <see cref="Bot">Bot</see></param>
+        /// <param name="where">Current <see cref="GameLocation">GameLocation</see></param>
+        /// <param name="prior">Previous Target (<see cref="Locations.Tile">Tile</see>, <see cref="StardewValley.Character">Character</see>, <see cref="StardewValley.Object">Object</see>)</param>
+        /// <param name="next">Next Target (<see cref="Locations.Tile">Tile</see>, <see cref="StardewValley.Character">Character</see>, <see cref="StardewValley.Object">Object</see>)</param>
+        /// <returns>Whether target should be searched for</returns>
+        public bool checkCondition(ICharacterController who, GameLocation where, T prior, T next) {
+            return this._condition(who, where, prior, next);
         }
 
         /// <summary>

@@ -12,8 +12,15 @@ namespace BotFramework.Actions
     {
         public ActionTile(
             ITarget target,
-            ActionType actionType = ActionType.NavigateAndExecute
-        ) : base(target, actionType) 
+            ITile directObject,
+            ILocationParser locationParser,
+            ActionType actionType = ActionType.Execute
+        ) : base(
+            target,
+            directObject,
+            locationParser,
+            actionType
+        )
         { }
     }
 }

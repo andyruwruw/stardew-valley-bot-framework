@@ -8,12 +8,6 @@ namespace BotFramework.Actions
     interface IAction
     {
         /// <summary>
-        /// Retrieve <see cref="ActionType">ActionType</see> of Action.
-        /// </summary>
-        /// <returns><see cref="ActionType">ActionType</see></returns>
-        ActionType GetActionType();
-
-        /// <summary>
         /// Retrieves the <see cref="Target">Target</see> for the action.
         /// </summary>
         /// <returns><see cref="Target">Target</see> of action</returns>
@@ -25,5 +19,11 @@ namespace BotFramework.Actions
         /// 
         /// <returns><see cref="LocationParser">LocationParser</see> of action</returns>
         ILocationParser GetLocationParser();
+
+        /// <summary>
+        /// Retrieve <see cref="ActionType">ActionType</see> of Action.
+        /// </summary>
+        /// <returns><see cref="ActionType">ActionType</see></returns>
+        ActionType GetActionType();
     }
 }

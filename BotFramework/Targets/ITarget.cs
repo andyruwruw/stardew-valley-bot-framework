@@ -26,7 +26,7 @@ namespace BotFramework.Targets
     /// <param name="where">Current <see cref="GameLocation">GameLocation</see></param>
     /// <param name="what"><see cref="Target">Target</see> object (<see cref="Locations.Tile">Tile</see>, <see cref="StardewValley.Character">Character</see>, <see cref="StardewValley.Object">Object</see>)</param>
     /// <returns>Whether to find target</returns>
-    delegate bool Condition<T>(ICharacterController who, GameLocation where, T what);
+    delegate bool Condition<T>(ICharacterController who, GameLocation where, T prior, T next);
 
     /// <summary>
     /// Action to envoke on <see cref="Target">Target</see> upon getting within range.

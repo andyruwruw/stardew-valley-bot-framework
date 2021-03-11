@@ -1,4 +1,5 @@
-﻿using StardewValley;
+﻿using Microsoft.Xna.Framework;
+using StardewValley;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,116 +10,91 @@ namespace BotFramework.Characters
 {
     class MovementController : PathFindController
     {
-		public PathFindController(Character c, GameLocation location, Point endPoint, int finalFacingDirection)
-			: this(c, location, isAtEndPoint, finalFacingDirection, eraseOldPathController: false, null, 10000, endPoint)
-		{
-		}
+		public MovementController(Character c, GameLocation location, Point endPoint, int finalFacingDirection) : base(c, location, endPoint, finalFacingDirection) { }
 
-		public PathFindController(Character c, GameLocation location, Point endPoint, int finalFacingDirection, endBehavior endBehaviorFunction)
-			: this(c, location, isAtEndPoint, finalFacingDirection, eraseOldPathController: false, null, 10000, endPoint)
-		{
-			this.endPoint = endPoint;
-			this.endBehaviorFunction = endBehaviorFunction;
-		}
+		public MovementController(Character c, GameLocation location, Point endPoint, int finalFacingDirection, endBehavior endBehaviorFunction) : base(c, location, endPoint, finalFacingDirection) { }
 
-		public PathFindController(Character c, GameLocation location, Point endPoint, int finalFacingDirection, endBehavior endBehaviorFunction, int limit)
-			: this(c, location, isAtEndPoint, finalFacingDirection, eraseOldPathController: false, null, limit, endPoint)
-		{
-			this.endPoint = endPoint;
-			this.endBehaviorFunction = endBehaviorFunction;
-		}
+		public MovementController(Character c, GameLocation location, Point endPoint, int finalFacingDirection, endBehavior endBehaviorFunction, int limit) : base(c, location, endPoint, finalFacingDirection, endBehaviorFunction, limit) { }
+		public MovementController(Character c, GameLocation location, Point endPoint, int finalFacingDirection, bool eraseOldPathController, bool clearMarriageDialogues = true) : base (c, location, endPoint, finalFacingDirection, eraseOldPathController, clearMarriageDialogues) { }
 
-		public PathFindController(Character c, GameLocation location, Point endPoint, int finalFacingDirection, bool eraseOldPathController, bool clearMarriageDialogues = true)
-			: this(c, location, isAtEndPoint, finalFacingDirection, eraseOldPathController, null, 10000, endPoint, clearMarriageDialogues)
-		{
-		}
 
-		public static bool isAtEndPoint(PathNode currentNode, Point endPoint, GameLocation location, Character c)
-		{
+		public MovementController(Stack<Point> pathToEndPoint, GameLocation location, Character c, Point endPoint) : base(pathToEndPoint, location, c, endPoint) { }
 
-		}
+		public MovementController(Stack<Point> pathToEndPoint, Character c, GameLocation l) : base(pathToEndPoint, c, l) { }
 
-		public PathFindController(Stack<Point> pathToEndPoint, GameLocation location, Character c, Point endPoint)
-		{
+		public MovementController(Character c, GameLocation location, isAtEnd endFunction, int finalFacingDirection, bool eraseOldPathController, endBehavior endBehaviorFunction, int limit, Point endPoint, bool clearMarriageDialogues = true) : base(c, location, endFunction, finalFacingDirection, eraseOldPathController, endBehaviorFunction, limit, endPoint, clearMarriageDialogues) { }
 
-		}
+		//public static bool isAtEndPoint(PathNode currentNode, Point endPoint, GameLocation location, Character c)
+		//{
 
-		public PathFindController(Stack<Point> pathToEndPoint, Character c, GameLocation l)
-		{
+		//}
 
-		}
+		//public bool isPlayerPresent()
+		//{
+		//	return this.location.farmers.Any();
+		//}
 
-		public PathFindController(Character c, GameLocation location, isAtEnd endFunction, int finalFacingDirection, bool eraseOldPathController, endBehavior endBehaviorFunction, int limit, Point endPoint, bool clearMarriageDialogues = true)
-		{
+		//public bool update(GameTime time)
+		//{
 
-		}
+		//}
 
-		public bool isPlayerPresent()
-		{
-			return this.location.farmers.Any();
-		}
+		//public static Stack<Point> findPath(Point startPoint, Point endPoint, isAtEnd endPointFunction, GameLocation location, Character character, int limit)
+		//{
 
-		public bool update(GameTime time)
-		{
+		//}
 
-		}
+		//public static Stack<Point> reconstructPath(PathNode finalNode)
+		//{
 
-		public static Stack<Point> findPath(Point startPoint, Point endPoint, isAtEnd endPointFunction, GameLocation location, Character character, int limit)
-		{
+		//}
 
-		}
+		//private byte[,] createMapGrid(GameLocation location, Point endPoint)
+		//{
 
-		public static Stack<Point> reconstructPath(PathNode finalNode)
-		{
+		//}
 
-		}
+		//private void moveCharacter(GameTime time)
+		//{
 
-		private byte[,] createMapGrid(GameLocation location, Point endPoint)
-		{
+		//}
 
-		}
+		//public void handleWarps(Rectangle position)
+		//{
 
-		private void moveCharacter(GameTime time)
-		{
+		//}
 
-		}
+		//public static bool IsPositionImpassableOnFarm(GameLocation loc, int x, int y)
+		//{
 
-		public void handleWarps(Rectangle position)
-		{
+		//}
 
-		}
+		//public static Stack<Point> FindPathOnFarm(Point startPoint, Point endPoint, GameLocation location, int limit)
+		//{
 
-		public static bool IsPositionImpassableOnFarm(GameLocation loc, int x, int y)
-		{
+		//}
 
-		}
+		//public static int GetFarmTileWeight(GameLocation location, int x, int y, Dictionary<Vector2, int> weight_map)
+		//{
 
-		public static Stack<Point> FindPathOnFarm(Point startPoint, Point endPoint, GameLocation location, int limit)
-		{
+		//}
 
-		}
+		//public static int CheckClearance(GameLocation location, Rectangle rect)
+		//{
 
-		public static int GetFarmTileWeight(GameLocation location, int x, int y, Dictionary<Vector2, int> weight_map)
-		{
+		//}
 
-		}
+		//public static Stack<Point> findPathForNPCSchedules(Point startPoint, Point endPoint, GameLocation location, int limit)
+		//{
 
-		public static int CheckClearance(GameLocation location, Rectangle rect)
-		{
+		//}
 
-		}
+		//private static bool isPositionImpassableForNPCSchedule(GameLocation loc, int x, int y)
+		//{
 
-		public static Stack<Point> findPathForNPCSchedules(Point startPoint, Point endPoint, GameLocation location, int limit)
-		{
+		//}
 
-		}
-
-		private static bool isPositionImpassableForNPCSchedule(GameLocation loc, int x, int y)
-		{
-
-		}
-
-		private static int getPreferenceValueForTerrainType(GameLocation l, int x, int y)
+		//private static int getPreferenceValueForTerrainType(GameLocation l, int x, int y)
 
 	}
 }

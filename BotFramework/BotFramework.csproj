@@ -78,6 +78,7 @@
     <Compile Include="Locations\Map.cs" />
     <Compile Include="Locations\Tile.cs" />
     <Compile Include="Structures\Graph.cs" />
+    <Compile Include="Targets\PowerLevel.cs" />
     <Compile Include="TemplateMethods\PathTemplate.cs" />
     <Compile Include="TemplateMethods\SearchTemplate.cs" />
     <Compile Include="Targets\TargetAction.cs" />
@@ -110,6 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commands\" />
+    <Folder Include="i18n\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Pathoschild.Stardew.ModBuildConfig.3.2.2\build\Pathoschild.Stardew.ModBuildConfig.targets" Condition="Exists('..\packages\Pathoschild.Stardew.ModBuildConfig.3.2.2\build\Pathoschild.Stardew.ModBuildConfig.targets')" />
