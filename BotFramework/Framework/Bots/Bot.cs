@@ -1,33 +1,74 @@
-﻿using BotFramework.Framework.Behaviors;
+﻿using System;
+using BotFramework.Behaviors;
 using StardewValley;
+using System.Collections.Generic;
+using BotFramework.Exceptions;
 
 namespace BotFramework
 {
-    class Bot : IBot
+    class Bot : IBot, IEquatable<Bot>
 	{
+		private string _id;
+
 		private Character _character;
 
-		private Behavior[] _behaviors;
+		private IDictionary<string, Behavior> _behaviors;
 
-		public Bot(Character character, Behavior[] behaviors)
+		public Bot(
+			string id,
+			Character character,
+			IList<Behavior> behaviors)
 		{
-			this._character = character;
-			this._behaviors = behaviors;
+			_id = id;
+			_character = character;
+			_behaviors = new Dictionary<string, Behavior>();
+
+			LoadBehaviors(behaviors);
+
+			BotManager.Attatch(this);
+		}
+
+		~Bot()
+		{
+			BotManager.Detatch(this);
+		}
+
+		public void Update()
+		{
+
+		}
+
+		private void LoadBehaviors(IList<Behavior> behaviors)
+		{
+			foreach (Behavior behavior in behaviors)
+			{
+				if (_behaviors.ContainsKey(behavior.GetId()))
+				{
+					throw new DuplicateBehaviorException(GetId(), behavior);
+				}
+
+				_behaviors.Add(behavior.GetId(), behavior);
+			}
+		}
+
+		public string GetId()
+		{
+			return _id;
 		}
 
 		public Character GetCharacter()
 		{
-			return this._character;
+			return _character;
 		}
 
-		public void SetBehaviors(Behavior[] behaviors)
+		public IList<Behavior> GetBehaviors()
 		{
-			this._behaviors = behaviors;
+			return new List<Behavior>(_behaviors.Values);
 		}
 
-		public Behavior[] GetBehaviors()
+		public virtual bool Equals(Bot other)
 		{
-			return this._behaviors;
+			return _id == other.GetId();
 		}
 	}
 }

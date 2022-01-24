@@ -1,27 +1,53 @@
-﻿using BotFramework.Framework.Stimulus;
+﻿using System;
+using BotFramework.Targets;
 
-namespace BotFramework.Framework.Behaviors
+namespace BotFramework.Behaviors
 {
-    class Behavior : IBehavior
+    class Behavior : IBehavior, IEquatable<Behavior>
 	{
+		private string _id;
+
 		private BehaviorType _type;
 
-		private IStimulus _stimulus;
+		private ITarget _stimulus;
 
-		public Behavior(BehaviorType type, IStimulus stimulus)
+		private int _priority;
+
+		public Behavior(
+			string id,
+			BehaviorType type,
+			ITarget stimulus,
+			int priority = 0)
 		{
-			this._type = type;
-			this._stimulus = stimulus;
+			_id = id;
+			_type = type;
+			_stimulus = stimulus;
+			_priority = priority;
+		}
+
+		public string GetId()
+		{
+			return _id;
 		}
 
 		public BehaviorType GetType()
 		{
-			return this._type;
+			return _type;
 		}
 
-		public IStimulus GetStimulus()
+		public ITarget GetTarget()
 		{
-			return this._stimulus;
+			return _stimulus;
+		}
+
+		public int GetPriority()
+		{
+			return _priority;
+		}
+
+		public virtual bool Equals(Behavior other)
+		{
+			return _id == other.GetId();
 		}
 	}
 }

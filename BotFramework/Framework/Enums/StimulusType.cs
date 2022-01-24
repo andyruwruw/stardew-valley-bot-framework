@@ -1,16 +1,16 @@
 ﻿namespace BotFramework
 {
 	/// <summary>
-	/// Types of <see cref="Stimulus.Stimulus">Stimulus</see>.
+	/// Types of <see cref="Target.Target">Target</see>.
 	/// </summary>
-	enum StimulusType
+	enum TargetType
 	{
 		/// <summary>
 		/// Target stimulus is a building.
 		/// </summary>
 		Building = 0,
 		/// <summary>
-		/// <para>Target stimulus is <see cref="StardewValley.Character"/></para>
+		/// <para>Target stimulus is a <see cref="StardewValley.Character"/></para>
 		/// <para><see cref="StardewValley.NPC"/>, <see cref="StardewValley.Characters.Pet"/>, <see cref="StardewValley.Monsters.Monster"/>, <see cref="StardewValley.Farmer"/> are all of type <see cref="StardewValley.Character"/>.</para>
 		/// </summary>
 		Character = 1,
@@ -42,5 +42,9 @@
 		/// Target stimulus is a <see cref="StardewValley.Warp"/>.
 		/// </summary>
 		Warp = 8,
+		/// <summary>
+		/// Target stimulus is a custom condition.
+		/// </summary>
+		Condition = 9,
 	}
 }

@@ -54,16 +54,33 @@
     <Compile Include="Framework\Behaviors\Behavior.cs" />
     <Compile Include="Framework\Behaviors\IBehavior.cs" />
     <Compile Include="Framework\Bots\Bot.cs" />
-    <Compile Include="Framework\Bots\BotFactory.cs" />
+    <Compile Include="Framework\Bots\BotBuilder.cs" />
+    <Compile Include="Framework\Bots\BotManager.cs" />
     <Compile Include="Framework\Bots\IBot.cs" />
+    <Compile Include="Framework\Controllers\Controller.cs" />
+    <Compile Include="Framework\Controllers\IController.cs" />
+    <Compile Include="Framework\Data\ModConfig.cs" />
+    <Compile Include="Framework\Enums\Awareness.cs" />
     <Compile Include="Framework\Enums\BehaviorType.cs" />
+    <Compile Include="Framework\Enums\QueryOrder.cs" />
+    <Compile Include="Framework\Enums\QueryType.cs" />
     <Compile Include="Framework\Enums\StimulusType.cs" />
-    <Compile Include="Framework\Stimulus\IStimulus.cs" />
-    <Compile Include="Framework\Stimulus\Stimulus.cs" />
-    <Compile Include="ModConfig.cs" />
+    <Compile Include="Framework\Enums\TriggerTypes.cs" />
+    <Compile Include="Framework\Exceptions\DuplicateBehaviorException.cs" />
+    <Compile Include="Framework\Exceptions\MissingBotPartException.cs" />
+    <Compile Include="Framework\Intents\IIntent.cs" />
+    <Compile Include="Framework\Intents\Intent.cs" />
+    <Compile Include="Framework\Navigators\MapNavigator.cs" />
+    <Compile Include="Framework\Navigators\WorldNavigator.cs" />
+    <Compile Include="Framework\Procedures\IProcedure.cs" />
+    <Compile Include="Framework\Procedures\Procedure.cs" />
+    <Compile Include="Framework\Targets\ITarget.cs" />
+    <Compile Include="Framework\Targets\Target.cs" />
+    <Compile Include="Framework\Utilities\Config.cs" />
+    <Compile Include="Framework\Utilities\Logger.cs.cs" />
     <Compile Include="ModEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Test\WaterBot.cs" />
+    <Compile Include="Test\WaterBot\UnwateredCrop.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="manifest.json" />
@@ -73,7 +90,6 @@
     <Content Include="logo.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Framework\Intents\" />
     <Folder Include="Framework\Navigation\Locations\" />
     <Folder Include="Framework\Navigation\World\" />
     <Folder Include="i18n\" />

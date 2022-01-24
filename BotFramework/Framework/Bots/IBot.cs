@@ -1,14 +1,17 @@
-﻿using BotFramework.Framework.Behaviors;
+﻿using BotFramework.Behaviors;
 using StardewValley;
+using System.Collections.Generic;
 
 namespace BotFramework
 {
     interface IBot
 	{
+		void Update();
+
+		string GetId();
+
 		Character GetCharacter();
 
-		void SetBehaviors(Behavior[] behaviors);
-
-		Behavior[] GetBehaviors();
+		IList<Behavior> GetBehaviors();
 	}
 }

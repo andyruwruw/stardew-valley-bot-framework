@@ -1,4 +1,5 @@
-﻿using BotFramework.Helpers;
+﻿using BotFramework.Data;
+using BotFramework.Test;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
@@ -10,43 +11,47 @@ namespace BotFramework
     /// </summary>
     public class ModEntry : Mod
     {
-        /// <summary>
-        /// Mod configuration
-        /// </summary>
-        public ModConfig config;
-
-        /// <summary>
+		/// <summary>
         /// The mod entry point, called after the mod is first loaded.
         /// </summary>
-        /// 
+        ///
         /// <param name="helper">Provides simplified APIs for writing mods</param>
         public override void Entry(IModHelper helper)
-        {
-            helper.Events.GameLoop.GameLaunched += this.onLaunched;
-            helper.Events.Input.ButtonPressed += this.OnButtonPressed;
+		{
+			this.SetStaticReferences(helper);
+			this.SetEventListeners(helper);
+		}
+
+		private void SetStaticReferences(IModHelper helper)
+		{
+			// Read config file.
+			Config.SetConfig(Helper.ReadConfig<ModConfig>());
+			// Set static reference to monitor for logging.
+			Logger.SetMonitor(Monitor);
         }
 
-        private void onLaunched(object sender, GameLaunchedEventArgs e)
-        {
-            this.config = this.Helper.ReadConfig<ModConfig>();
+		private void SetEventListeners(IModHelper helper)
+		{
+			helper.Events.GameLoop.UpdateTicked += BotManager.UpdateTicked;
+			helper.Events.GameLoop.DayStarted += BotManager.DayStarted;
+			helper.Events.Input.ButtonPressed += BotManager.ButtonPressed;
+			helper.Events.Player.Warped += BotManager.Warped;
+			helper.Events.Input.ButtonPressed += this.OnButtonPressed;
+		}
 
-            LogProxy.SetDebug(this.config.DebugEnvironment);
-            LogProxy.SetMonitor(this.Monitor);
-        }
-
-        private void OnButtonPressed(object sender, ButtonPressedEventArgs e)
+		private void OnButtonPressed(object sender, ButtonPressedEventArgs e)
         {
             // ignore if player hasn't loaded a save yet
-            if (!Context.IsWorldReady)
-                return;
+			if (!Context.IsWorldReady)
+			{
+				return;
+			}
 
-            if (e.Button == SButton.U)
-            {
-                this.Monitor.Log($"{Game1.player.Name} pressed {e.Button}.", LogLevel.Debug);
-                WaterBotTest bot = new WaterBotTest();
-
-                bot.Start();
-            }
+			if (e.Button == SButton.U)
+			{
+				Logger.Debug($"{Game1.player.Name} pressed {e.Button}.");
+				WaterBot bot = new WaterBot();
+			}
         }
     }
 }
