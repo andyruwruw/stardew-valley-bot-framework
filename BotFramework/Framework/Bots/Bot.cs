@@ -38,6 +38,18 @@ namespace BotFramework
 
 		}
 
+		public void DayStarted() {
+
+		}
+
+		public void ButtonPressed(SButton button) {
+			
+		}
+
+		public void Warped() {
+
+		}
+
 		private void LoadBehaviors(IList<Behavior> behaviors)
 		{
 			foreach (Behavior behavior in behaviors)

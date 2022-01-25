@@ -41,17 +41,26 @@ namespace BotFramework
 
 		public static void DayStarted(object sender, DayStartedEventArgs args)
 		{
-
+			foreach (IBot bot in _bots)
+			{
+				bot.DayStarted();
+			}
 		}
 
 		public static void ButtonPressed(object sender, ButtonPressedEventArgs args)
 		{
-
+			foreach (IBot bot in _bots)
+			{
+				bot.ButtonPressed(e.Button);
+			}
 		}
 
 		public static void Warped(object sender, WarpedEventArgs args)
 		{
-
+			foreach (IBot bot in _bots)
+			{
+				bot.Warped();
+			}
 		}
 	}
 }
