@@ -41,7 +41,6 @@ namespace BotFramework
 
 		private void OnButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            // ignore if player hasn't loaded a save yet
 			if (!Context.IsWorldReady)
 			{
 				return;
@@ -50,7 +49,7 @@ namespace BotFramework
 			if (e.Button == SButton.U)
 			{
 				Logger.Debug($"{Game1.player.Name} pressed {e.Button}.");
-				WaterBot bot = new WaterBot();
+				//WaterBot bot = new WaterBot();
 			}
         }
     }

@@ -3,7 +3,7 @@ using BotFramework.Targets;
 
 namespace BotFramework.Behaviors
 {
-    class Behavior : IBehavior, IEquatable<Behavior>
+    abstract class Behavior : IBehavior, IEquatable<Behavior>
 	{
 		private string _id;
 
@@ -25,10 +25,11 @@ namespace BotFramework.Behaviors
 			_priority = priority;
 		}
 
-		public string GetId()
-		{
-			return _id;
-		}
+		public abstract void InitializeTarget();
+
+		public abstract void InitializeQueryMethod();
+
+		public abstract string GetId();
 
 		public BehaviorType GetType()
 		{

@@ -6,23 +6,18 @@ using BotFramework.Exceptions;
 
 namespace BotFramework
 {
-    class Bot : IBot, IEquatable<Bot>
+    abstract class Bot : IBot, IEquatable<Bot>
 	{
-		private string _id;
+		protected Character _character;
 
-		private Character _character;
+		protected IDictionary<string, Behavior> _behaviors;
 
-		private IDictionary<string, Behavior> _behaviors;
-
-		public Bot(
-			string id,
-			Character character,
-			IList<Behavior> behaviors)
+		public Bot()
 		{
-			_id = id;
-			_character = character;
-			_behaviors = new Dictionary<string, Behavior>();
+			_character = InitializeCharacter();
 
+			_behaviors = new Dictionary<string, Behavior>();
+			IList<Behavior> behaviors = InitializeBehaviors();
 			LoadBehaviors(behaviors);
 
 			BotManager.Attatch(this);
@@ -38,6 +33,10 @@ namespace BotFramework
 
 		}
 
+		protected abstract IList<Behavior> InitializeBehaviors();
+
+		protected abstract Character InitializeCharacter();
+
 		private void LoadBehaviors(IList<Behavior> behaviors)
 		{
 			foreach (Behavior behavior in behaviors)
@@ -51,10 +50,7 @@ namespace BotFramework
 			}
 		}
 
-		public string GetId()
-		{
-			return _id;
-		}
+		public abstract string GetId();
 
 		public Character GetCharacter()
 		{

@@ -80,7 +80,11 @@
     <Compile Include="Framework\Utilities\Logger.cs.cs" />
     <Compile Include="ModEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Test\WaterBot\UnwateredCrop.cs" />
+    <Compile Include="Test\Behaviors\AvoidLowEnergyBehavior.cs" />
+    <Compile Include="Test\Behaviors\RefillWaterBehavior.cs" />
+    <Compile Include="Test\Behaviors\WaterCropsBehavior.cs" />
+    <Compile Include="Test\WaterBot.cs" />
+    <Compile Include="Test\Targets\UnwateredCrop.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="manifest.json" />
