@@ -33,10 +33,6 @@ namespace BotFramework
 
 		}
 
-		protected abstract IList<Behavior> InitializeBehaviors();
-
-		protected abstract Character InitializeCharacter();
-
 		private void LoadBehaviors(IList<Behavior> behaviors)
 		{
 			foreach (Behavior behavior in behaviors)

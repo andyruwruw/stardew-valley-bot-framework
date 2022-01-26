@@ -32,10 +32,10 @@ namespace BotFramework
 
 		private void SetEventListeners(IModHelper helper)
 		{
-			helper.Events.GameLoop.UpdateTicked += BotManager.UpdateTicked;
-			helper.Events.GameLoop.DayStarted += BotManager.DayStarted;
-			helper.Events.Input.ButtonPressed += BotManager.ButtonPressed;
-			helper.Events.Player.Warped += BotManager.Warped;
+			helper.Events.GameLoop.UpdateTicked += UpdateTicked;
+			helper.Events.GameLoop.DayStarted += DayStarted;
+			helper.Events.Input.ButtonPressed += ButtonPressed;
+			helper.Events.Player.Warped += Warped;
 			helper.Events.Input.ButtonPressed += this.OnButtonPressed;
 		}
 
