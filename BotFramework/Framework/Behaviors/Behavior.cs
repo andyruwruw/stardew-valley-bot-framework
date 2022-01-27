@@ -3,33 +3,44 @@ using BotFramework.Targets;
 
 namespace BotFramework.Behaviors
 {
-    abstract class Behavior : IBehavior, IEquatable<Behavior>
+  abstract class Behavior : IBehavior, IEquatable<Behavior>
 	{
-		private string _id;
-
 		private BehaviorType _type;
 
 		private ITarget _target;
 
 		private int _priority;
 
-		public Behavior(
-			string id,
-			BehaviorType type,
-			ITarget target,
-			int priority = 0)
+		public Behavior()
 		{
-			_id = id;
-			_type = type;
-			_target = target;
-			_priority = priority;
+			_type = DefaultType();
+			_target = DefaultTarget();
+			_priority = DefaultPriority();
 		}
 
-		public abstract void InitializeTarget();
+		protected abstract ITarget DefaultTarget();
 
-		public abstract void InitializeQueryMethod();
+		protected virtual BehaviorType DefaultType()
+		{
+			return BehaviorType.Task;
+		}
+
+		protected virtual int DefaultPriority()
+		{
+			return 0;
+		}
 
 		public abstract string GetId();
+
+		public virtual int GetPriority()
+		{
+			return _priority;
+		}
+
+		public virtual void SetPriority(int priority)
+		{
+			_priority = priority;
+		}
 
 		public BehaviorType GetType()
 		{
@@ -39,11 +50,6 @@ namespace BotFramework.Behaviors
 		public ITarget GetTarget()
 		{
 			return _target;
-		}
-
-		public int GetPriority()
-		{
-			return _priority;
 		}
 
 		public virtual bool Equals(Behavior other)

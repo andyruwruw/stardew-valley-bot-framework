@@ -9,13 +9,20 @@ using StardewModdingAPI;
 
 namespace BotFramework
 {
-    abstract class Bot : IBot, IEquatable<Bot>
+  abstract class Bot : IBot, IEquatable<Bot>
 	{
+		protected TriggerType _trigger;
+
 		protected IController _controller;
 
 		protected IList<IState> _states;
 
-		public Bot(Character character, IList<IState> states)
+		protected bool _isRunning;
+
+		public Bot(
+			Character character,
+			TriggerType trigger,
+			IList<IState> states)
 		{
 			if (character == null)
 			{
@@ -26,7 +33,27 @@ namespace BotFramework
 			_states = states;
 			CheckStates();
 
+			_trigger = trigger;
+
 			BotManager.Attatch(this);
+			_isRunning = _trigger == TriggerType.AlwaysOn;
+		}
+
+		public Bot(Character character, TriggerType trigger)
+		{
+			if (character == null)
+			{
+				throw new BotRequiresCharacterException();
+			}
+			_controller = DefaultController(character);
+
+			_states = DefaultStates();
+			CheckStates();
+
+			_trigger = trigger;
+
+			BotManager.Attatch(this);
+			_isRunning = _trigger == TriggerType.AlwaysOn;
 		}
 
 		public Bot(Character character)
@@ -40,7 +67,10 @@ namespace BotFramework
 			_states = DefaultStates();
 			CheckStates();
 
+			_trigger = DefaultTrigger();
+
 			BotManager.Attatch(this);
+			_isRunning = _trigger == TriggerType.AlwaysOn;
 		}
 
 		public Bot()
@@ -54,7 +84,10 @@ namespace BotFramework
 			_states = DefaultStates();
 			CheckStates();
 
+			_trigger = DefaultTrigger();
+
 			BotManager.Attatch(this);
+			_isRunning = _trigger == TriggerType.AlwaysOn;
 		}
 
 		~Bot()
@@ -62,9 +95,25 @@ namespace BotFramework
 			BotManager.Detatch(this);
 		}
 
+		public void Start() {
+			_isRunning = true;
+		}
+
+		public void Stop() {
+			_isRunning = false;
+		}
+
+		protected virtual Boolean ConditionalStart() {
+			return false;
+		}
+
 		public void UpdateTicked()
 		{
-
+			if (!_isRunning
+				&& _trigger == TriggerType.Conditional
+				&& ConditionalStart()) {
+				Start();
+			}
 		}
 
 		public void DayStarted()
@@ -74,12 +123,24 @@ namespace BotFramework
 
 		public void ButtonPressed(SButton button)
 		{
-
+			if (!_isRunning
+				&& _trigger == TriggerType.UserInput
+				&& button == DefaultTriggerButton()) {
+				Start();
+			}
 		}
 
 		public void Warped()
 		{
 
+		}
+
+		protected virtual TriggerType DefaultTrigger() {
+			return TriggerType.Called;
+		}
+
+		protected virtual SButton DefaultTriggerButton() {
+			return SButton.None;
 		}
 
 		protected virtual IController DefaultController(Character character)

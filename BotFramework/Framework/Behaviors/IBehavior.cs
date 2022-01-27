@@ -2,14 +2,16 @@
 
 namespace BotFramework.Behaviors
 {
-    interface IBehavior
+  interface IBehavior
 	{
 		string GetId();
+
+		int GetPriority();
+
+		void SetPriority(int priority);
 
 		BehaviorType GetType();
 
 		ITarget GetTarget();
-
-		int GetPriority();
 	}
 }
