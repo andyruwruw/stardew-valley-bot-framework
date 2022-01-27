@@ -1,14 +1,37 @@
 ﻿using BotFramework.Procedures;
+using StardewValley;
 
 namespace BotFramework.Controllers
 {
     class Controller : IController
-    {
-        private Procedure _procedure;
+	{
+		protected Character _character;
 
-        public void UpdateProcedure(Procedure procedure)
-        {
-            this._procedure = procedure;
-        }
-    }
+		protected IProcedure _procedure;
+
+		public Controller(Character character)
+		{
+			_character = character;
+		}
+
+		public void Update()
+		{
+
+		}
+
+		public Character GetCharacter()
+		{
+			return _character;
+		}
+
+		public IProcedure GetProcedure()
+		{
+			return _procedure;
+		}
+
+		public void SetProcedure(IProcedure procedure)
+		{
+			_procedure = procedure;
+		}
+	}
 }

@@ -13,11 +13,11 @@ namespace BotFramework.Exceptions
 		{
 		}
 
-		public DuplicateBehaviorException(Behavior behavior) : base($"{CustomTitle} ${behavior.GetId()}: ${CustomDescription}")
+		public DuplicateBehaviorException(IBehavior behavior) : base($"{CustomTitle} \"${behavior.GetId()}\": ${CustomDescription}")
 		{
 		}
 
-		public DuplicateBehaviorException(string id, Behavior behavior) : base($"{CustomTitle} ${behavior.GetId()} (${id}): ${CustomDescription}")
+		public DuplicateBehaviorException(string id, IBehavior behavior) : base($"{CustomTitle} \"${behavior.GetId()}\" (\"${id}\"): ${CustomDescription}")
 		{
 		}
 

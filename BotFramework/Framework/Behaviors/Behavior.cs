@@ -9,19 +9,19 @@ namespace BotFramework.Behaviors
 
 		private BehaviorType _type;
 
-		private ITarget _stimulus;
+		private ITarget _target;
 
 		private int _priority;
 
 		public Behavior(
 			string id,
 			BehaviorType type,
-			ITarget stimulus,
+			ITarget target,
 			int priority = 0)
 		{
 			_id = id;
 			_type = type;
-			_stimulus = stimulus;
+			_target = target;
 			_priority = priority;
 		}
 
@@ -38,7 +38,7 @@ namespace BotFramework.Behaviors
 
 		public ITarget GetTarget()
 		{
-			return _stimulus;
+			return _target;
 		}
 
 		public int GetPriority()

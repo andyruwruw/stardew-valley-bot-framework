@@ -35,7 +35,7 @@ namespace BotFramework
 		{
 			foreach (IBot bot in _bots)
 			{
-				bot.Update();
+				bot.UpdateTicked();
 			}
 		}
 
@@ -51,7 +51,7 @@ namespace BotFramework
 		{
 			foreach (IBot bot in _bots)
 			{
-				bot.ButtonPressed(e.Button);
+				bot.ButtonPressed(args.Button);
 			}
 		}
 

@@ -1,4 +1,4 @@
-﻿using BotFramework.Behaviors;
+﻿using BotFramework.Framework.States;
 using StardewValley;
 using System.Collections.Generic;
 
@@ -6,24 +6,21 @@ namespace BotFramework.Test
 {
     class WaterBot : Bot
     {
-		public WaterBot() : base()
-		{
-
-		}
-
-		protected override Character InitializeCharacter()
-		{
-			return Game1.player;
-		}
-
-        protected override IList<Behavior> InitializeBehaviors()
-		{
-			return new List<Behavior>();
-		}
-
         public override string GetId()
 		{
 			return "WaterBot";
 		}
-	}
+
+        protected override Character DefaultCharacter()
+		{
+			return Game1.player;
+		}
+
+        protected override IList<IState> DefaultStates()
+		{
+			IList<IState> states = new List<IState>();
+
+			return states;
+		}
+    }
 }

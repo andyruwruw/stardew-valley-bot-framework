@@ -54,7 +54,6 @@
     <Compile Include="Framework\Behaviors\Behavior.cs" />
     <Compile Include="Framework\Behaviors\IBehavior.cs" />
     <Compile Include="Framework\Bots\Bot.cs" />
-    <Compile Include="Framework\Bots\BotBuilder.cs" />
     <Compile Include="Framework\Bots\BotManager.cs" />
     <Compile Include="Framework\Bots\IBot.cs" />
     <Compile Include="Framework\Controllers\Controller.cs" />
@@ -66,14 +65,17 @@
     <Compile Include="Framework\Enums\QueryType.cs" />
     <Compile Include="Framework\Enums\StimulusType.cs" />
     <Compile Include="Framework\Enums\TriggerTypes.cs" />
+    <Compile Include="Framework\Exceptions\BotRequiresCharacterException.cs" />
     <Compile Include="Framework\Exceptions\DuplicateBehaviorException.cs" />
-    <Compile Include="Framework\Exceptions\MissingBotPartException.cs" />
+    <Compile Include="Framework\Exceptions\DuplicateStateException.cs" />
     <Compile Include="Framework\Intents\IIntent.cs" />
     <Compile Include="Framework\Intents\Intent.cs" />
     <Compile Include="Framework\Navigators\MapNavigator.cs" />
     <Compile Include="Framework\Navigators\WorldNavigator.cs" />
     <Compile Include="Framework\Procedures\IProcedure.cs" />
     <Compile Include="Framework\Procedures\Procedure.cs" />
+    <Compile Include="Framework\States\IState.cs" />
+    <Compile Include="Framework\States\State.cs" />
     <Compile Include="Framework\Targets\ITarget.cs" />
     <Compile Include="Framework\Targets\Target.cs" />
     <Compile Include="Framework\Utilities\Config.cs" />

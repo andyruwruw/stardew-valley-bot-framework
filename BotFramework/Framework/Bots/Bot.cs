@@ -2,23 +2,57 @@
 using BotFramework.Behaviors;
 using StardewValley;
 using System.Collections.Generic;
+using BotFramework.Controllers;
 using BotFramework.Exceptions;
+using BotFramework.Framework.States;
+using StardewModdingAPI;
 
 namespace BotFramework
 {
     abstract class Bot : IBot, IEquatable<Bot>
 	{
-		protected Character _character;
+		protected IController _controller;
 
-		protected IDictionary<string, Behavior> _behaviors;
+		protected IList<IState> _states;
+
+		public Bot(Character character, IList<IState> states)
+		{
+			if (character == null)
+			{
+				throw new BotRequiresCharacterException();
+			}
+			_controller = DefaultController(character);
+
+			_states = states;
+			CheckStates();
+
+			BotManager.Attatch(this);
+		}
+
+		public Bot(Character character)
+		{
+			if (character == null)
+			{
+				throw new BotRequiresCharacterException();
+			}
+			_controller = DefaultController(character);
+
+			_states = DefaultStates();
+			CheckStates();
+
+			BotManager.Attatch(this);
+		}
 
 		public Bot()
 		{
-			_character = InitializeCharacter();
+			if (DefaultCharacter() == null)
+			{
+				throw new BotRequiresCharacterException();
+			}
+			_controller = DefaultController(DefaultCharacter());
 
-			_behaviors = new Dictionary<string, Behavior>();
-			IList<Behavior> behaviors = InitializeBehaviors();
-			LoadBehaviors(behaviors);
+			_states = DefaultStates();
+			CheckStates();
 
 			BotManager.Attatch(this);
 		}
@@ -28,39 +62,71 @@ namespace BotFramework
 			BotManager.Detatch(this);
 		}
 
-		public void Update()
+		public void UpdateTicked()
 		{
 
 		}
 
-		private void LoadBehaviors(IList<Behavior> behaviors)
+		public void DayStarted()
 		{
-			foreach (Behavior behavior in behaviors)
-			{
-				if (_behaviors.ContainsKey(behavior.GetId()))
-				{
-					throw new DuplicateBehaviorException(GetId(), behavior);
-				}
 
-				_behaviors.Add(behavior.GetId(), behavior);
+		}
+
+		public void ButtonPressed(SButton button)
+		{
+
+		}
+
+		public void Warped()
+		{
+
+		}
+
+		protected virtual IController DefaultController(Character character)
+		{
+			return new Controller(character);
+		}
+
+		protected abstract Character DefaultCharacter();
+
+		protected abstract IList<IState> DefaultStates();
+
+		protected void CheckStates()
+		{
+			for (int i = 0; i < _states.Count; i++)
+			{
+				if (_states.IndexOf(_states[i]) != i)
+				{
+					throw new DuplicateStateException(GetId(), _states[i]);
+				}
 			}
 		}
 
 		public abstract string GetId();
 
-		public Character GetCharacter()
+		public virtual string GetDescription()
 		{
-			return _character;
+			return "No description provided.";
 		}
 
-		public IList<Behavior> GetBehaviors()
+		public virtual IController GetController()
 		{
-			return new List<Behavior>(_behaviors.Values);
+			return _controller;
+		}
+
+		public virtual Character GetCharacter()
+		{
+			return _controller.GetCharacter();
+		}
+
+		public virtual IList<IState> GetStates()
+		{
+			return _states;
 		}
 
 		public virtual bool Equals(Bot other)
 		{
-			return _id == other.GetId();
+			return GetId() == other.GetId();
 		}
 	}
 }
