@@ -1,10 +1,6 @@
-# BotFramwork For Developers
+# BotFramework For Developers
 
-Hello fellow modder, glad to have you here.
-
-The BotFramework mod is built on the idea of **inheritance** and **extending** the classes it provides.
-
-You should have some experience with the following!
+Hello fellow modder, glad to have you here. The BotFramework mod is built on the idea of **inheritance** and **extending** the classes it provides.
 
 The motiviation for this framework was the realization that in order to turn my [WaterBot](https://github.com/andyruwruw/stardew-valley-water-bot) into a **HarestBot** or **MiningBot**, the majority of the code would have needed to be modified despite their simularities.
 
@@ -14,20 +10,46 @@ Help me keep this framework as simple to use by sharing your feedback on the exp
 
 # Table of Contents
 
+- [Prerequisites and Features](#prerequisites-and-features)
 - [Beginners Setup Guide](#beginners-setup-guide)
-  - [Downloading BotFramework](#downloading-botframework)
+  - [SMAPI and Downloading BotFramework](#smapi-and-downloading-botframework)
   - [Creating your Mod](#creating-your-mod)
   - [Referencing to BotFramework](#referencing-to-botframework)
 - [How a Bot Works](#how-a-bot-works)
   - [Bot Character](#bot-character)
+  - [Bot States](#bot-states)
+  - [State Behaviors](#state-behaviors)
+  - [Behavior Types](#behavior-types)
+    - [I. Behavior Type: Reaction](#i-behavior-type-reaction)
+    - [II. Behavior Types: Task](#ii-behavior-type-task)
+  - [Behavior Targets](#behavior-targets)
+  - [Resolving Multiple Behaviors](#resolving-multiple-behaviors)
+
+# Prerequisites and Features
+
+You should have some experience with the following:
+
+- Coding in any Language
+  - Classes and Objects
+  - Inheritance & Abstract Classes
+- Some Experience with Stardew Valley Code
+
+What Bot Framework takes care of for you:
+
+- Running and Optimizing Tasks
+- Managing States and Behaviors
+- Combining Behaviors into Procedures
+- Pathfinding and Query Algorithms
+- Controlling the Character
+- Most of the Interaction with Stardew Valley Code.
 
 # Beginners Setup Guide
 
-## Downloading BotFramework
+## SMAPI and Downloading BotFramework
 
-To begin you should have Stardew Valley running with [SMAPI](https://stardewvalleywiki.com/Modding:Player_Guide/Getting_Started).
+To begin you should have Stardew Valley running with SMAPI. Here's a [link to the tutorial](https://stardewvalleywiki.com/Modding:Player_Guide/Getting_Started). 
 
-You'll then need to follow the players guide for installation on the [BotFramework README.md](../README.md#installation) or NexusMods page to add it to your mod folder.
+You'll then need to follow the players guide for installing the BotFramework, found on the [BotFramework README.md](../README.md#installation) or NexusMods page, and add the mod to your Stardew Valley mods folder.
 
 ## Creating your Mod
 
