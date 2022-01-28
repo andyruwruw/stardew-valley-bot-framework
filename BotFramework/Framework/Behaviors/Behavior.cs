@@ -54,7 +54,7 @@ namespace BotFramework.Behaviors
 
 		public virtual bool Equals(Behavior other)
 		{
-			return _id == other.GetId();
+			return GetId() == other.GetId();
 		}
 	}
 }

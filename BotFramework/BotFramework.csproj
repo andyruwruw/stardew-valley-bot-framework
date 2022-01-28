@@ -72,10 +72,25 @@
     <Compile Include="Framework\Intents\Intent.cs" />
     <Compile Include="Framework\Navigators\MapNavigator.cs" />
     <Compile Include="Framework\Navigators\WorldNavigator.cs" />
+    <Compile Include="Framework\Pathfinders\AStarPathfinder.cs" />
+    <Compile Include="Framework\Pathfinders\MinimumSpanningTreePathfinder.cs" />
     <Compile Include="Framework\Procedures\IProcedure.cs" />
     <Compile Include="Framework\Procedures\Procedure.cs" />
+    <Compile Include="Framework\Queries\IntervalQuery.cs" />
+    <Compile Include="Framework\Queries\IQuery.cs" />
+    <Compile Include="Framework\Queries\Query.cs" />
+    <Compile Include="Framework\Queries\RadialQuery.cs" />
+    <Compile Include="Framework\Queries\SequentialQuery.cs" />
     <Compile Include="Framework\States\IState.cs" />
     <Compile Include="Framework\States\State.cs" />
+    <Compile Include="Framework\Structures\Graphs\Graph.cs" />
+    <Compile Include="Framework\Structures\Graphs\IGraph.cs" />
+    <Compile Include="Framework\Structures\Graphs\Node.cs" />
+    <Compile Include="Framework\Structures\Graphs\QuadTree.cs" />
+    <Compile Include="Framework\Structures\Shapes\Circle.cs" />
+    <Compile Include="Framework\Structures\Shapes\IShape.cs" />
+    <Compile Include="Framework\Structures\Shapes\Rectangle.cs" />
+    <Compile Include="Framework\Structures\Shapes\Shape.cs" />
     <Compile Include="Framework\Targets\ITarget.cs" />
     <Compile Include="Framework\Targets\Target.cs" />
     <Compile Include="Framework\Utilities\Config.cs" />
@@ -96,8 +111,6 @@
     <Content Include="logo.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Framework\Navigation\Locations\" />
-    <Folder Include="Framework\Navigation\World\" />
     <Folder Include="i18n\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
