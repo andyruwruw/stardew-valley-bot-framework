@@ -3,17 +3,14 @@ using BotFramework.Targets;
 
 namespace BotFramework.Behaviors
 {
-  abstract class Behavior : IBehavior, IEquatable<Behavior>
+	abstract class Behavior : IBehavior, IEquatable<Behavior>
 	{
-		private BehaviorType _type;
-
 		private ITarget _target;
 
 		private int _priority;
 
-		public Behavior()
+		public Behavior() 
 		{
-			_type = DefaultType();
 			_target = DefaultTarget();
 			_priority = DefaultPriority();
 		}
@@ -28,6 +25,16 @@ namespace BotFramework.Behaviors
 		protected virtual int DefaultPriority()
 		{
 			return 0;
+		}
+
+		protected virtual bool PreQueryCondition()
+		{
+			return true;
+		}
+
+		protected virtual bool PostQueryCondition()
+		{
+			return true;
 		}
 
 		public abstract string GetId();
