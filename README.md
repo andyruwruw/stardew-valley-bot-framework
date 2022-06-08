@@ -1,20 +1,22 @@
 <p align="center">
-<img src="https://github.com/andyruwruw/stardew-valley-bot-framework/blob/main/documentation/images/header.gif?raw=true" />
+  <img src="https://github.com/andyruwruw/stardew-valley-bot-framework/blob/main/documentation/images/header.gif?raw=true" />
 </p>
 
 # Stardew Valley BotFramework
 
-This mod doesn't do anything on its own, however it offers developers a Framework to create bots to complete automated tasks.
+This mod doesn't do anything on its own, however it offers developers a Framework to create bots to complete automated tasks. These bots take control of the player's character \ NPC and can perform dynamic tasks.
 
-#### Developers, this framework is for you if you:
+# When To Use
 
-Want a `Stardew.Character` to perform `Actions` on `Targets` (Tile, Objects or Characters) in one or multiple `GameLocations`.
+Developers, this framework is for you if you want:
 
-#### The bot framework handles:
+A `Stardew.Character` to perform `Actions` on `Targets` (Tile, Objects or Characters) in one or multiple `GameLocations`.
 
-- What route to most efficiently go through GameLocations.
-- The order of targets to most efficiently visit them all.
-- Executing your action on the targets.
+# Features
+
+- Determines best route through GameLocations.
+- Determines best order to visit targets to get through them as efficiently as possible.
+- Executes your action on the targets.
 
 The BotFramework utilizes a variety of path and route finding algorithms to give you a fully functioning bot!
 
